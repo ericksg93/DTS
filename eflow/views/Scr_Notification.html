@@ -1,0 +1,319 @@
+
+ 
+<div ng-controller="Scr_Notification_Controller" ng-init="init()">  
+  <section class="content">
+      <div class="row"> 
+        <div class="col-md-3">
+          <div class="box box-solid">
+            <div class="box-header with-border btn btn-primary btn-block margin-bottom">
+              <a class="box-title" style="color:#fff;">Carpetas
+              </a>
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" ng-click="Show_Folder = ! Show_Folder; Switch_Folder_Data(Show_Folder,'Show_Folder');"><i style="color:#fff;" ng-class="Class_Folder"></i> 
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding" ng-show="Show_Folder">
+              
+              <ul class="nav nav-pills nav-stacked">
+                <li>
+                  <a ng-click="query = {'State_Created':true};Show_All_Message=true;Show_Read_Message = false;Show_New_Message = false;">
+                    <i class="fa fa-inbox"></i> Bandeja de Salida
+                    <span class="label label-primary pull-right">
+                      {{(ArrayNotificacion|  filter: {'State_Created':true}:true).length}}
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="query = {'State_Sent':true};Show_All_Message=true;Show_Read_Message = false;Show_New_Message = false;">
+                    <i class="fa fa-inbox"></i> Bandeja de Enviados
+                    <span class="label label-primary pull-right">
+                      {{(ArrayNotificacion|  filter: {'State_Sent':true}:true).length}}
+                    </span>
+                  </a>
+                </li>
+                <li>
+                   <a ng-click="query = {'State_Received':true};Show_All_Message=true;Show_Read_Message = false;Show_New_Message = false;">
+                    <i class="fa fa-file-text-o"></i> Bandeja de Entregados
+                    <span class="label label-primary pull-right">
+                      {{(ArrayNotificacion|  filter: {'State_Received':true}:true).length}} 
+                    </span>
+                  </a>
+                </li>
+                <li>
+                  <a ng-click="query = {'State_Open':true};Show_All_Message=true;Show_Read_Message = false;Show_New_Message = false;">
+                    <i class="fa fa-envelope-o"></i> Bandeja de Leidos
+                    <span class="label label-primary pull-right">
+                      {{(ArrayNotificacion|  filter: {'State_Open':true}:true).length}}
+                    </span>
+                  </a>
+                </li>  
+                <li>
+                  <a ng-click="Show_All_Message=false; Show_New_Message=true;Show_Read_Message = false;">
+                    <i class="fa fa-envelope"></i> Nuevo Mensaje
+                  </a>
+                </li>    
+                <!--li>
+                  <a href="">
+                    <i class="fa fa-filter"></i>  
+                    <span class="label label-warning pull-right">65
+                    </span>
+                  </a>
+                </li-->
+              </ul>
+            </div>        
+          </div> 
+          <div class="box box-solid">
+            <div class="box-header with-border btn btn-primary btn-block margin-bottom">
+              <a class="box-title" style="color:#fff;">Filtro de Busqueda
+              </a>
+              <div class="box-tools">
+                <button type="button" class="btn btn-box-tool" ng-click="Show_Filter = ! Show_Filter; Switch_Folder_Data(Show_Filter,'Show_Filter');"><i style="color:#fff;" ng-class="Class_Filter"></i> 
+                </button>
+              </div>
+            </div>
+            <div class="box-body no-padding" ng-show="Show_Filter">
+              <ul class="nav nav-pills nav-stacked">
+                <li>
+                  <a ng-click="search.User">
+                    <i class="fa fa-user"></i>Usuario
+                    <span>
+                     <select style="width: 50%;"  ng-model="search.User" ng-options="Obj.ID as Obj.Name  + ' ' +Obj.Lastname+ ' ( '+Obj.ID+ ' )' for Obj in ArrayUser| orderBy:'Name'" class="form-control pull-right" id="Usuario"> </select>
+							</span><br/><br/>
+						</a>
+                </li>
+                <li>
+                  <a ng-click="search.ID_Truck">
+                    <i class="fa fa-truck"></i>Vehiculo
+                    <span>
+                      <select style="width: 50%;"  ng-model="search.ID_Truck" ng-options="Obj1.ID_Truck as Obj1.ID_Truck for Obj1 in ArrayVehicle | orderBy:'ID_Truck'" class="form-control pull-right" id="Vehicle"></select>
+							</span><br/><br/>
+						</a>
+                </li>
+                <li>
+        				<div class="col-md-6">
+                    <i class="fa fa-calendar"></i> Fecha
+                  </div>
+                    <div class="col-md-6 input-group date" >
+                      <input type="date" class="form-control pull-right" ng-model="search.Estimated_Date" ng-change="search.Estimated_Date">
+                    </div>
+                </li>
+                <li>
+                  <a ng-click="search.Matter">
+                    <i class="fa fa-file-o"></i>Asunto
+                    <span>
+                    		<input type="text" style="width: 50%;" class="form-control pull-right" ng-model="search.Matter" >
+                    </span><br/><br/>
+						</a>
+                </li>
+              </ul>
+            </div>        
+          </div> 
+        </div>
+        <div class="col-md-9" id="printableArea" ng-show="Show_All_Message">
+          <div class="box box-primary">
+            <div class="box-header bg-primary with-border">
+              <h3 class="box-title">Notificaciones</h3>
+              
+    
+            </div> 
+            <div class="box-body no-padding">
+              <div class="mailbox-controls">
+                <div class="btn-group">
+                  <button class="btn btn-primary" data-toggle="tooltip" data-container="body" title="Selecionar">
+                 <input  class="btn btn-primary" type="checkbox" ng-model="master" ng-click="Checking_Checkboxes_Check_Master(master);" /> 
+                  </button>
+      			 <button type="button" ng-show="Show_Delete_Message" class="btn btn-primary" ng-click="Delect_message(Obj,ArrayNotificacion)" data-toggle="tooltip" data-container="body" title="Eliminar">
+                    <i class="fa fa-trash-o"></i></button>
+                <button type="button" class="btn btn-primary" ng-click="refresh()" data-toggle="tooltip" data-container="body" title="Refrescar">
+                  <i class="fa fa-refresh"></i></button>
+                 <button type="button" class="btn btn-primary" ng-click="printDiv('printableArea')" data-toggle="tooltip"  data-container="body" title="Imprimir">
+                   <i class="fa fa-print"></i></button>
+                </div>
+               
+                 <div class="pull-right">
+                  <!--  {{(ArrayNotificacion|  filter: query).length}}
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-chevron-right"></i></button>
+                </div>-->
+                <div class="text-right">
+    <span> 
+      Número de registro por página: <input style="color:#000; "ng-model="pageSize" placeholder="10" type="number" min="1" size="2"> de {{(ArrayNotificacion|  filter: query).length}}.
+     </span>
+    <button class="btn btn-primary" ng-disabled="currentPage == 0"  style="background-color:#4096c6; color:#fff; " ng-click="currentPage=currentPage-1"> <i class="fa fa-angle-double-left"></i> </button>    
+      <span>{{currentPage+1}}/{{numberOfPages()}}</span>    
+    <button class="btn btn-primary" style="background-color:#4096c6; color:#fff; " ng-disabled="currentPage >= ArrayNotificacion.length/pageSize - 1" ng-click="currentPage=currentPage+1"> <i class="fa fa-angle-double-right"></i> </button>
+    </div>   </div>
+                <!-- /.pull-right -->
+              </div>
+              <div class="table-responsive ">
+                <table class="table table-hover" class="resizable" >
+					 <tbody>
+                  <tr style="color:#000; align:center" ng-repeat="Obj in ArrayNotificacion  | startFrom:currentPage*pageSize | limitTo:pageSize | filter: search |  filter: query">
+                    <!--td>
+                      <div class="icheckbox_flat-blue" aria-checked="false" aria-disabled="false" style="position: relative;">
+                        <input type="checkbox" style="position: absolute; opacity: 0;">
+                        <ins class="iCheck-helper" style="position: absolute; top: 0%; left: 0%; display: block; width: 100%; height: 100%; margin: 0px; padding: 0px; border: 0px; opacity: 0; background: rgb(255, 255, 255);">
+                        </ins>
+                      </div>
+                    </td-->
+                    
+                    <td>
+                      <input type="checkbox" name="CheckBox_messages" ng-checked="master" ng-click="Checking_Checkboxes_Check();" value="{{Obj}}" id_check="{{Obj._id.$id}}"/>
+                    </td>  
+         
+                    <td ng-click="Info_Message(Obj,'Read')" class="mailbox-name">{{Obj.User}}</td>
+                    <td ng-click="Info_Message(Obj,'Read')" class="mailbox-subject">{{Obj.ID_Truck}}</td>
+                    <td ng-click="Info_Message(Obj,'Read')" class="mailbox-attachment">{{Obj.Matter}}</td>
+                    <td ng-click="Info_Message(Obj,'Read')" class="mailbox-date">{{Obj.Estimated_Date}}</td>
+                  </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="box-footer no-padding">
+              <div class="mailbox-controls">
+                 <div class="btn-group">
+                  <button class="btn btn-primary" data-toggle="tooltip" data-container="body" title="Selecionar">
+                 <input  class="btn btn-primary" type="checkbox" ng-model="master" ng-click="Checking_Checkboxes_Check_Master(master);" /> 
+                  </button>
+                  <button type="button" class="btn btn-primary" ng-show="Show_Delete_Message" ng-click="Delect_message()" data-toggle="tooltip" data-container="body" title="Eliminar">
+                    <i class="fa fa-trash-o"></i></button>
+                <button type="button" class="btn btn-primary" ng-click="refresh()" data-toggle="tooltip" data-container="body" title="Refrescar">
+                  <i class="fa fa-refresh"></i></button>
+                 <button type="button" class="btn btn-primary"  ng-click="printDiv('printableArea')" data-toggle="tooltip"  data-container="body" title="Imprimir">
+                   <i class="fa fa-print"></i></button>
+                </div>
+                <div class="pull-right">
+                <div class="text-right">
+                 
+    <span> 
+      Número de registro por página: <input style="color:#000; "ng-model="pageSize" placeholder="10" type="number" min="1" size="2"> de {{(ArrayNotificacion|  filter: query).length}}.
+    </span>
+    <button class="btn btn-primary" ng-disabled="currentPage == 0"  style="background-color:#4096c6; color:#fff; " ng-click="currentPage=currentPage-1"> <i class="fa fa-angle-double-left"></i> </button>    
+      <span>{{currentPage+1}}/{{numberOfPages()}}</span>    
+    <button class="btn btn-primary" style="background-color:#4096c6; color:#fff; " ng-disabled="currentPage >= ArrayNotificacion.length/pageSize - 1" ng-click="currentPage=currentPage+1"> <i class="fa fa-angle-double-right"></i> </button>
+    </div>   <!-- {{(ArrayNotificacion|  filter: query).length}}
+                  <div class="btn-group">
+                    <button type="button" class="btn btn-primary"><i class="fa fa-chevron-left"></i></button>
+                    <button type="button" class="btn btn-primary"><i class="fa fa-chevron-right"></i></button>
+                  </div>-->
+                </div>
+              </div>
+            </div> 
+          </div>
+        </div>
+        
+        <div class="col-md-9"  id="printableArea1" ng-show="Show_Read_Message">
+          <div class="box box-primary"  >
+            <div class="box-header bg-primary with-border">
+              <h3 class="box-title ">Lectura de la notificación</h3>
+            </div>
+            <div class="box-body no-padding">
+              <div class="mailbox-read-info" ng-repeat="mess in Message">
+                <h5><b>Enviado por el usuario: </b>{{mess.Control.Created_User}}</h5>
+                <h5><b>Enviado al usuario: </b>{{mess.User}}</h5>
+                <h5><b>Enviado al Vehiculo: </b>{{mess.ID_Truck}}</h5>
+                <h5><b>Enviado el </b>{{mess.Estimated_Date}}</h5>
+                <h5><b>Recibido el </b>{{mess.Control.Syncroniced_Date}}</h5>
+                <h5><b>Leido el </b>{{mess.Reading_Date}}</h5>
+              </div>
+              <div class="mailbox-controls with-border text-center">
+                <div class="btn-group"  ng-repeat="mess in Message">
+                   <button type="button" class="btn btn-primary" ng-click="Info_Message(mess,'Return')"data-toggle="tooltip" data-container="body" title="Regresar">
+                    <i class="fa fa-reply"></i></button>
+                  <button type="button" class="btn btn-primary" ng-click="Reenviar_Message(mess)" data-toggle="tooltip" data-container="body" title="Reenviar">
+                    <i class="fa fa-share"></i></button>
+                 <button type="button" class="btn btn-primary"  ng-click="printDiv('printableArea1')" data-toggle="tooltip"  data-container="body" title="Imprimir">
+                   <i class="fa fa-print"></i></button>
+                  <button type="button" class="btn btn-primary" ng-click="Delect_messages(mess)" data-toggle="tooltip" data-container="body" title="Eliminar">
+                    <i class="fa fa-trash-o"></i></button>
+                </div>
+              </div>
+              <div class="mailbox-read-message" ng-repeat="mess in Message">
+					<br/>
+                <p>{{mess.Matter}}</p>
+					<br/>
+                <p>{{mess.Detail}}</p>
+					<br/>
+              </div>
+            </div>
+           
+            <div class="box-footer">
+              <div class="mailbox-controls with-border text-center">
+                <div class="btn-group"  ng-repeat="mess in Message">
+                   <button type="button" class="btn btn-primary" ng-click="Info_Message(mess,'Return')"data-toggle="tooltip" data-container="body" title="Regresar">
+                    <i class="fa fa-reply"></i></button>
+                  <button type="button" class="btn btn-primary" ng-click="Reenviar_Message(mess)" data-toggle="tooltip" data-container="body" title="Reenviar">
+                    <i class="fa fa-share"></i></button>
+                 <button type="button" class="btn btn-primary"  ng-click="printDiv('printableArea1')" data-toggle="tooltip"  data-container="body" title="Imprimir">
+                   <i class="fa fa-print"></i></button>
+                  <button type="button" class="btn btn-primary" ng-click="Delect_messages(mess)" data-toggle="tooltip" data-container="body" title="Eliminar">
+                    <i class="fa fa-trash-o"></i></button>
+                </div>
+             </div>
+             </div>
+          </div>
+        </div>
+        
+        <div class="col-md-9" ng-show="Show_New_Message">
+          <div class="box box-primary">
+            <div class="box-header bg-primary with-border">
+              <h3 class="box-title">Creacion de mensaje</h3>
+            </div>
+            <div class="box-body">
+              <div class="form-group">
+              	  <label class="col-sm-4 control-label">Asignar al Usuario:</label>
+                 <div class="col-sm-8"> 
+                   <div class="form-group">
+                     <select ng-model="Noti.User" style="width: 100%;"ng-options="Obj.ID as Obj.Name  + ' ' +Obj.Lastname+ ' ( '+Obj.ID+ ' )' for Obj in ArrayUser  | orderBy:'Name'" ng-change="Filter_License(Noti.User)"  class="form-control" id="Usuario"> </select>
+                   </div>
+                 </div>
+              </div>  
+					<div class="form-group" ng-show="Show_Select_Vehicule">
+						<label class="col-sm-4 control-label">Asignar al Vehículo:</label>
+						<div class="col-sm-8"> 
+							<div class="form-group">						
+                       <select  ng-model="Noti.ID_Truck" ng-options="Obj1.ID_Truck as Obj1.ID_Truck for Obj1 in ArrayVehicle_Filter | orderBy:'ID_Truck'" style="width: 100%;" class="form-control" id="Vehicle"></select>
+							</div>
+						</div>
+					</div> 
+              <div class="form-group">
+                 <label class="col-sm-4 control-label">Fecha:</label>
+                 <div class="col-sm-8"> 
+                   <div class="form-group">
+                		<input type="date" ng-model="Noti.Date" ng-change="validate_fechaMayorQue(Noti.Date);" class="form-control">
+             		 </div>
+                 </div>
+              </div>  
+              <div class="form-group">
+                 <label class="col-sm-4 control-label">Asunto:</label>
+                 <div class="col-sm-8"> 
+                   <div class="form-group">
+               			 <textarea class="form-control" ng-model="Noti.Matter" placeholder="Asunto:"></textarea>
+           				</div>
+                 </div>
+              </div> 
+              <div class="form-group">
+                 <label class="col-sm-4 control-label">Mensaje:</label>
+                 <div class="col-sm-8"> 
+                   <div class="form-group">
+               			 <textarea class="form-control" ng-model="Noti.Detail" placeholder="Mensaje:"></textarea>
+           				</div>
+                 </div>
+              </div>  
+            </div>
+            <div class="box-footer">
+              <div class="pull-right">
+                <button type="submit" class="btn btn-primary pull-right" ng-click="Send_Message(Noti)" > Enviar</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        </div>
+  </section>	
+  
+</div>
+
+

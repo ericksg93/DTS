@@ -1,0 +1,350 @@
+<div class="container" ng-controller="Scr_Settings_Controller" ng-init="init()">   
+  	
+        <form  ng-submit="SaveData();"class="form-horizontal">
+       
+          <div  class="panel panel-info" ng-show="Show_Settings_Logo">
+            <div class="panel-heading" >Logo de la compañia</div>
+            <div class="panel-body"> 
+          
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Imagen</label>
+            <div class="col-sm-7"> 
+              <div class="input-group col-sm-12 ">
+                <span class="input-group-addon" data-toggle="tooltip" title="Ver/Ocultar Imagen" ng-click="Show_Image = !Show_Image;">
+                  <i class="fa fa-file-image-o"></i>
+                </span>
+                <span> 
+                  <span class="btn btn-primary btn-file" style="background-color: #014D7C;color:#fff;" > 
+                    <i class="glyphicon glyphicon-folder-open"> </i> Buscar&hellip; 
+                    <input accept=".jpg" id="File_Image" type="file" onchange="angular.element(this).scope().Upload_Image()"/>
+                  </span>
+                  <input  style="width: 200px;" type="text" ng-model="Companys.Logo" class="form-control" readonly/> 
+                </span>
+                </div> 
+            </div> 
+    			<div class="col-sm-2"></div>
+            <label  class="col-sm-3 control-label"></label>
+            <div class="col-sm-7">
+              <div class="box" ng-show="Show_Image">
+                   <img src="{{Image}}" alt="No hay imagen" class="img-responsive" width="500" height="500" onclick="javascript:this.width=800;this.height=800" ondblclick="javascript:this.width=500;this.height=500">
+                 </div>
+            </div>
+            </div>
+               </div>
+              <div class="form-group">
+                <div class="col-sm-12 controls">                        
+              	  <a class="btn btn-primary pull-right" ng-click="Companys.Logo=Image; Show_Settings_Poll=false;Show_Settings_Logo= false; Show_Settings = true" style="background-color: #014D7C;color:#fff;" ><i  class="glyphicon glyphicon-save"></i> Guardar</a>   
+                  <a ng-click="Show_Settings_Logo= false; Show_Settings = true" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" >
+                    <i  class="glyphicon glyphicon-remove"></i> Cancelar</a>                                    	                         
+                </div>
+             </div>
+            </div>
+          
+          
+          
+          
+          
+       
+          <div class="box box-primary" ng-show="Show_Settings">
+            <div class="box-body box-profile">
+              <img class="profile-user-img img-responsive img-circle"  ng-click="Show_Settings_Logo=true; Show_Settings = false" src="{{Image}}" alt="User profile picture" width="350px" height="350px">
+              <h3 class="profile-username text-center">{{Company}} </h3>
+
+    <div  class="panel panel-info">
+            <div class="panel-heading"ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=false;Show_Settings_Logo=false; Show_Settings_License= false;Show_Settings_Mail= false;Show_Settings_User= false;Show_Settings_Report= true;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Indicadores</div>
+            <div class="panel-body" ng-show="Show_Settings_Report"> 
+            <div class="row">
+                <label class="col-sm-2 control-label">Merma:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_8_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_8_Max" placeholder="Maximo..."> 
+                <label class="col-sm-2 control-label">Espacio Utilizado:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_1_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_1_Max" placeholder="Maximo..."> 
+               </div>
+            <div class="row">
+                <label class="col-sm-2 control-label">Devoluciones:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_3_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_3_Max" placeholder="Maximo..."> 
+                <label class="col-sm-2 control-label">Rendimiento Visitas:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_4_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_4_Max" placeholder="Maximo..."> 
+            </div>
+            <div class="row">
+               <label class="col-sm-2 control-label">Visitas a tiempo:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_5_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_5_Max" placeholder="Maximo..."> 
+                <label class="col-sm-2 control-label">Efectividad de Entrega:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_7_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_7_Max" placeholder="Maximo..."> 
+          </div>
+            <div class="row">
+                <label class="col-sm-2 control-label">Orden con Producto Dañado:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_2_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_2_Max" placeholder="Maximo..."> 
+                <label class="col-sm-2 control-label">Visitas fuera de tiempo:</label>
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_6_Min" placeholder="Minimo...">
+                <input class="col-sm-2"type="number" min="0" max="100" class="form-control" ng-model="Array_Report.Percentage_6_Max" placeholder="Maximo..."> 
+           </div>
+             <a   ng-click="validate_Settings1(Array_Report)">
+                    <i class="glyphicon glyphicon-check" >Guardar Indicadores</i>
+                  </a>
+              </div>
+            </div>
+            
+        <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_Poll=true;Show_Settings_Mail_Guide=false;Show_Settings_Report=false;Show_Settings_Logo=false;Show_Settings_License= false; Show_Settings_Mail= false;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">
+            <span>Preguntas de Encuesta</span>
+            <span class="pull-right">
+            <label class="checkbox-inline"><input type="checkbox" ng-model="Enable_Poll">Habilitar Encuesta</label>
+            </span>
+                
+            </div>
+            <div class="panel-body" ng-show="Show_Settings_Poll"> 
+            <div class="row">
+                <label class="col-sm-2 control-label">Pregunta:</label>
+                <input class="col-sm-6" type="text" name="Input_Value"  ng-model="_Question.Question" placeholder="Pregunta...">               
+                <div class="col-sm-4">
+                  <a ng-click="Guardar_Pregunta(_Question)">
+                    <i class="glyphicon glyphicon-check" >Guardar Pregunta</i>
+                  </a>
+                </div>
+            </div>
+              
+               <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Pregunta</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Question in Array_Questions">
+                    <td class="col-sm-4"> {{Question.Question}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Question,Array_Questions)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+
+
+          <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=false;Show_Settings_Report= false;Show_Settings_Logo=false; Show_Settings_License= false; Show_Settings_Mail= true;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Correos para envio de PDF</div>
+            <div class="panel-body" ng-show="Show_Settings_Mail"> 
+                <label class="col-sm-4 control-label">Nombre del Departamento o Persona:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Mail.Value" placeholder="Nombre...">
+                <label class="col-sm-2 control-label">Correo:</label>
+                <input class="col-sm-2" type="Mail" name="Input_Description" class="form-control" ng-model="Mail.Description" placeholder="Correo...">
+                <div class="col-sm-2">
+                  <a   ng-click="validate_Settings(Mail,Array_Mail)">
+                    <i class="glyphicon glyphicon-check" >Guardar Correo</i>
+                  </a>
+                </div>
+              
+               <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Nombre</th>
+                    <th class="col-sm-4">Correo</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Mails in Array_Mail">
+                    <td class="col-sm-4"> {{Mails.Value}}</td>
+                    <td class="col-sm-4"> {{Mails.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Mails,Array_Mail)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            
+            <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=true;Show_Settings_Report=false;Show_Settings_Logo=false;Show_Settings_License= false; Show_Settings_Mail= false;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Correos para envio de Número de Guía</div>
+            <div class="panel-body" ng-show="Show_Settings_Mail_Guide"> 
+                <label class="col-sm-4 control-label">Nombre del Departamento o Persona:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Mail_Guide.Value" placeholder="Nombre...">
+                <label class="col-sm-2 control-label">Correo:</label>
+                <input class="col-sm-2" type="Mail" name="Input_Description" class="form-control" ng-model="Mail_Guide.Description" placeholder="Correo...">
+                <div class="col-sm-2">
+                  <a ng-click="validate_Settings(Mail_Guide,Array_Mail_Guide)">
+                    <i class="glyphicon glyphicon-check" >Guardar Correo</i>
+                  </a>
+                </div>
+              
+               <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Nombre</th>
+                    <th class="col-sm-4">Correo</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Mail_Guide in Array_Mail_Guide">
+                    <td class="col-sm-4"> {{Mail_Guide.Value}}</td>
+                    <td class="col-sm-4"> {{Mail_Guide.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Mail_Guide,Array_Mail_Guide)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+            
+              <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=false;Show_Settings_Report= false;Show_Settings_Logo=false;Show_Settings_Mail= false;Show_Settings_License= false;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = true">Unidad de Medida</div>
+            <div class="panel-body"  ng-show="Show_Settings_Unity"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Unity.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="Unity.Description" placeholder="Descripcion...">
+                <div class="col-sm-4">
+                  <a   ng-click="validate_Settings(Unity,Array_Unity)">
+                    <i class="glyphicon glyphicon-check" >Guardar Unidad de Medida</i>
+                  </a>
+                </div>     
+                <table style="width:100%">
+                  <tr> 
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Unitis in Array_Unity">
+                    <td class="col-sm-4"> {{Unitis.Value}}</td>
+                    <td class="col-sm-4"> {{Unitis.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Unitis,Array_Unity)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>  
+          <div  class="panel panel-info">
+            <div class="panel-heading"ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=false;Show_Settings_Report= false;Show_Settings_Logo=false;Show_Settings_Mail= false;Show_Settings_License= false;Show_Settings_User= false;Show_Settings_Fuel= true;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Tipos de Combustible</div>
+            <div class="panel-body"  ng-show="Show_Settings_Fuel"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Fuel.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="Fuel.Description" placeholder="Descripcion...">
+                <div class="col-sm-4">
+                  <a   ng-click="validate_Settings(Fuel,Array_Fuel)">
+                    <i class="glyphicon glyphicon-check" >Guardar Tipos De Combustible</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Fuels in Array_Fuel">
+                    <td class="col-sm-4"> {{Fuels.Value}}</td>
+                    <td class="col-sm-4"> {{Fuels.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Fuels,Array_Fuel)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+     
+          <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=false;Show_Settings_Report= false;Show_Settings_Logo=false;Show_Settings_Mail= false;Show_Settings_License= false;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= true;Show_Settings_Unity = false">Tipos de Vehiculos</div>
+            <div class="panel-body" ng-show="Show_Settings_Vehicle"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Vehicle.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="Vehicle.Description" placeholder="Descripcion...">
+                <div class="col-sm-4">
+                  <a   ng-click="validate_Settings(Vehicle,Array_Vehicle)">
+                    <i class="glyphicon glyphicon-check" >Guardar Tipos De Vehiculos</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Vehicles in Array_Vehicle">
+                    <td class="col-sm-4"> {{Vehicles.Value}}</td>
+                    <td class="col-sm-4"> {{Vehicles.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Vehicles,Array_Vehicle)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_Poll=false;Show_Settings_Mail_Guide=false;Show_Settings_Report= false;Show_Settings_Logo=false;Show_Settings_Mail= false;Show_Settings_License= true;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Tipos de Licencia</div>
+            <div class="panel-body" ng-show="Show_Settings_License"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="License.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="License.Description" placeholder="Descripcion...">
+                <div class="col-sm-4">
+                  <a   ng-click="validate_Settings(License,Array_License)">
+                    <i class="glyphicon glyphicon-check" >Guardar Tipos De Licencia</i>
+                  </a>
+                </div>
+              
+               <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Licenses in Array_License">
+                    <td class="col-sm-4"> {{Licenses.Value}}</td>
+                    <td class="col-sm-4"> {{Licenses.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Licenses,Array_License)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+              
+              
+              <div class="form-group">
+            <div class="col-sm-12 controls">                        
+          	  <button  type="submit" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ><i  class="glyphicon glyphicon-save"></i> Guardar</button>   
+              <a href="#Calendar" ng-click="Show_Company= false; Show_User= false; Show_Settings = false" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" >
+                <i  class="glyphicon glyphicon-remove"></i> Cancelar</a>                                    	                         
+            </div>
+          </div>
+              
+
+            
+            </div>
+            <!-- /.box-body -->
+          </div>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        </form>
+   
+  
+  
+</div>

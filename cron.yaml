@@ -1,0 +1,15 @@
+cron:  
+- description: send email invitations
+  url: /EmailInvitation
+  target: eflowdts
+  schedule: every 1 minutes
+  
+- description: send email pdf
+  url: /EmailPDF
+  target: eflowdts
+  schedule: every 1 minutes
+  
+- description: send email guide
+  url: /EmailGUIDE
+  target: eflowdts
+  schedule: every 1 minutes

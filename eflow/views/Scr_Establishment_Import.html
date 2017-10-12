@@ -1,0 +1,289 @@
+<style>
+.btn-file {
+  position: relative;
+  overflow: hidden;
+}
+.btn-file input[type=file] {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-size: 100px;
+  text-align: right;
+  filter: alpha(opacity=0);
+  opacity: 0;
+  background: red;
+  cursor: inherit;
+  display: block;
+}
+input[readonly] {
+  background-color: white !important;
+  cursor: text !important;
+}
+</style>
+
+<script>
+
+$(document).on('change', '.btn-file :file', function() {
+  var input = $(this),
+      numFiles = input.get(0).files ? input.get(0).files.length : 1,
+      label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+  input.trigger('fileselect', [numFiles, label]);
+});
+
+$(document).ready( function() {
+    $('.btn-file :file').on('fileselect', function(event, numFiles, label) {
+        
+        var input = $(this).parents('.input-group').find(':text'),
+            log = numFiles > 1 ? numFiles + ' files selected' : label;
+        
+        if( input.length ) {
+            input.val(log);
+        } else {
+            if( log ) alert(log);
+        }
+        
+    });
+});
+</script>
+
+<div id="Contents" ng-controller="Scr_Establishment_Import_Controller" ng-init="init()">
+  
+  <div id="Options" style="text-align:center;clear:both; margin-left: 1%;width: 98%; margin-right: 1%;" >
+   <!-- <div id="right" style="float:right;">  
+        Total de registros: {{ArrayJobs.length}} 
+    </div>
+    -->
+ </div>
+      <!--<span class="btn btn-primary" style="background-color:#295C7A;height: 33px; "> 
+     <input value="Select"  type="file" id="VisitPoint_File_Import"  />
+      </span>
+        -->
+    <div id="container" style="clear:both; margin-left: 1%;width: 98%; margin-right: 1%;" >
+  <div style="text-align: center;">  
+    <span style="display:inline-block;">
+      <h4>
+          Importar Establecimientos
+      </h4>
+    </span> 
+
+   </div>
+    <div id="left" style="margin-left: 1%;width: 98%; margin-right: 1%;"   > 
+      <div class="input-group" >
+          <!--<span class="input-group-btn">-->
+              <span>
+                <input  style="width: 200px;" type="text" class="form-control" readonly/> 
+
+                <span class="btn btn-primary btn-file">
+                           <i class="glyphicon glyphicon-folder-open">  </i> Buscar&hellip; <input accept=".json,.csv" id="VisitPoint_File_Import" type="file"/>
+                </span>
+              </span>
+              <span>
+                 <a class="btn btn-primary span4" title="Cambiar" data-toggle="tooltip" ng-click="Import_Files()">
+                  <i class=" glyphicon glyphicon-upload"></i>  Cargar Datos</a>
+
+              <!--    <button type="button" class="btn btn-primary span4 glyphicon glyphicon-upload" ng-click="Import_Files()">Cargar Datos</button> -->
+              </span>
+     <span ng-show="Show_Actions">
+    		<select style="width:175px " class="btn btn-primary span4" ng-model="Option"  ng-change="Action_Option(Option)"> 
+              <option value="">Selecione la Opción deseada</option>
+              <option value="Asignar">Asignar</option>
+           </select>
+     </span>
+              <span>
+                 <a class="btn btn-primary span4" title="Descargar archivo" data-toggle="tooltip" href="http://development-dot-eflowv1.appspot.com/eflow/Importing_Files/EstablecimientoImportar.xlsx" >
+ <i class=" fa fa-file-excel-o"></i> Descargar Formato</a>
+              <!--    <button type="button" class="btn btn-primary span4 glyphicon glyphicon-upload" ng-click="Import_Files()">Cargar Datos</button> -->
+              </span>	 
+       
+          <!-- </label>-->    
+        
+           <!--   <span>
+                <a class="btn btn-primary span4" title="Cambiar" data-toggle="tooltip" ng-click="Open_Modal_Change()">
+                  <i class=" glyphicon glyphicon-pencil"></i>  Cambiar</a>
+              </span>       
+       <!-- </span>-->
+	   
+       </div> 
+   </div> 
+
+  <hr/>
+  
+  <!--Table VisitPoint Import -->
+  <div id="Table_VisitPoint_Import" class="table-responsive" style="margin-left: 1%;width: 98%; margin-right: 1%;"  >
+    
+    <div class="text-right">
+    <span> 
+      Número de registro por página: <input ng-model="pageSize" placeholder="10" type="number" min="1" size="2">
+    </span>
+    <button class="btn btn-info" ng-disabled="currentPage == 0"  style="background-color:#4096c6; color:#fff; " ng-click="currentPage=currentPage-1"> <i class="fa fa-angle-double-left"></i> </button>    
+      <span>{{currentPage+1}}/{{numberOfPages()}}</span>    
+    <button class="btn btn-info" style="background-color:#4096c6; color:#fff; " ng-disabled="currentPage >= ArrayVisitPoints_Import.length/pageSize - 1" ng-click="currentPage=currentPage+1"> <i class="fa fa-angle-double-right"></i> </button>
+    </div>
+    
+    <table class="table table-responsive table-striped table-hover" >
+      <thead >
+        <tr style="background-color:#4096c6; color:#fff; align:center">
+          <th>Nº fila</th>
+         <th> 
+            <input type="checkbox"  ng-model="master" ng-click="Checking_Checkboxes_Check_Master(master);" />
+          </th>
+           <th ng-repeat="header in Headers"><!-- ng-click="To_Order_By(header.value);" -->
+			<!--i class="glyphicon glyphicon-sort"></i-->   {{header.es}}<span class="dropdown">
+    <span class="caret dropdown-toggle" type="button" data-toggle="dropdown">&nbsp;&nbsp;
+    </span>
+    <ul class="dropdown-menu">
+      <li class="dropdown-header"><b>Alineación de texto</b></li>
+      <li><a class="glyphicon glyphicon-align-left" ng-click="Change_Class('text-left',header.value)"><b> Izquierda</b></a> </li>
+      <li><a class="glyphicon glyphicon-align-center" ng-click="Change_Class('text-center',header.value)"><b> Centro</b></a> </li>
+      <li><a class="glyphicon glyphicon-align-right" ng-click="Change_Class('text-right',header.value)"><b> Derecha</b></a> </li>
+      <li><a class="glyphicon glyphicon-align-justify" ng-click="Change_Class('text-justify',header.value)"><b> Justificaado</b></a> </li>
+      <li class="dropdown-header"><b>Ordenamiento de texto</b></li>
+      <!--<li><a class="glyphicon glyphicon-chevron-up" ng-click="To_Order_By(header.value)desc"></a></li>-->
+      <li><a class="glyphicon glyphicon-sort" ng-click="To_Order_By(header.value)"><b> Ascendente / Descendente</b></a> </li>
+    </ul>
+  </span>
+		   </th>
+         </tr>
+        <tr>
+          <th></th>
+          <th></th>
+		  <th>
+        <input ng-model="search.Name">
+          </th>
+          <th>
+            <input ng-model="search.Legal_Cedula">
+          </th>
+          <th>
+            <input ng-model="search.Route.Route_Name">
+          </th>
+          <th>
+				<input ng-model="search.Address">          
+          </th>
+          <th>
+				<input ng-model="search.Manager">          
+          </th>
+          <th>
+            <input ng-model="search.Mail">
+          </th>
+        </tr>
+      </thead>
+      <tbody  style="background-color:#deedf5">
+        
+        <tr ng-repeat="obj in ArrayVisitPoints_Import | startFrom:currentPage*pageSize | limitTo:pageSize  | filter:search | orderBy: OrderList " >
+         <!--<tr  dir-paginate="obj in ArrayJobs_Import  | filter:search | orderBy: OrderList | itemsPerPage: pageSize" current-page="currentPage">-->
+          <td>{{$index+1}}</td>
+          <td><input type="checkbox" name="CheckBox_Options" ng-checked="master" ng-click="Checking_Checkboxes_Check();" value="{{obj}}"/></td>  
+          <td ng-click="Visualize_VisitPoint_Import(obj);"ng-class="Align_class_Name">{{obj.Name}}</td> 
+		  <td ng-click="Visualize_VisitPoint_Import(obj);"ng-class="Align_class_Legal_Cedula">{{obj.Legal_Cedula}}</td> 
+          <td ng-click="Visualize_VisitPoint_Import(obj);"ng-class="Align_class_Route">{{obj.Route.Route_Name}}</td>
+          <td ng-click="Visualize_VisitPoint_Import(obj);"ng-class="Align_class_Address">{{obj.Address}}</td>
+          <td ng-click="Visualize_VisitPoint_Import(obj);"ng-class="Align_class_Manager">{{obj.Manager}}</td> 
+          <td ng-click="Visualize_VisitPoint_Import(obj);"ng-class="Align_class_Mail">{{obj.Mail}}</td> 
+        </tr>
+      </tbody>
+<tfoot>
+      <tr>
+    <td colspan="8" class="text-center">
+    <div>
+      
+    <button class="btn btn-info" ng-disabled="currentPage == 0" style="background-color:#4096c6; color:#fff; " ng-click="currentPage=currentPage-1"> <i class="fa fa-angle-double-left"></i> </button>
+    
+      <span>{{currentPage+1}}/{{numberOfPages()}}</span>      
+      
+    <button class="btn btn-info" ng-disabled="currentPage >= ArrayVisitPoints_Import.length/pageSize - 1"  style="background-color:#4096c6; color:#fff; "ng-click="currentPage=currentPage+1"> <i class="fa fa-angle-double-right"></i> </button>
+      
+    </div>    
+    </td>
+      </tr>
+      </tfoot>
+    </table>
+  </div>
+     <div class="text-center" >
+          <dir-pagination-controls boundary-links="true" on-page-change="pageChangeHandler(newPageNumber)" template-url="views/dirPagination.tpl.html"></dir-pagination-controls>
+          </div>
+ 
+     
+  <!--Modal VisitPoint Edit and Visualize -->
+  <div id="Modal_Edit_VisitPoints_Import" class="modal fade" role="dialog">
+
+        <div class="modal-dialog modal-lg">
+
+          <div class="modal-content">
+
+            <div class="modal-header" style="background-color:#4096c6;color:#fff">
+              <h2 class="modal-title"><i class="glyphicon glyphicon-briefcase"></i> Visualizar/Editar Establecimientos</h2>
+            </div>                
+            <div class="modal-body">
+            <div class="panel panel-info"><div class="panel-heading"><b>Puede</b> editar los campos.</div></div>
+          
+             <div class="form-group">
+              <label class="col-sm-4 control-label">Identificador de Establecimiento:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.ID_Location" placeholder="Identificador de Establecimiento..." required>
+            </div> </div> </div>
+                     <div class="form-group">
+              <label class="col-sm-4 control-label">Encargado:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Manager" placeholder="Encargado..." required>
+            </div> </div> </div>
+              <div class="form-group">
+              <label class="col-sm-4 control-label">Nombre de establecimiento:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Name" placeholder="Nombre de establecimiento..." required>
+            </div> </div> </div>
+                     <div class="form-group">
+              <label class="col-sm-4 control-label">Cédula Jurídica:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Legal_Cedula" placeholder="Cédula Jurídica..." required >
+            </div> </div> </div>
+                    <div class="form-group">
+              <label class="col-sm-4 control-label">Dirección:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Address" placeholder="Dirección..." required>
+           </div> </div> </div>
+                    <div class="form-group">
+              <label class="col-sm-4 control-label">Número de Teléfono:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Telephone_Number" placeholder="Número de Teléfono..." required>
+            </div> </div> </div>
+                    <div class="form-group">
+              <label class="col-sm-4 control-label">Correo:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Mail" placeholder="Correo..." required>
+            </div> </div> </div>
+                   <div class="form-group">
+              <label class="col-sm-4 control-label">Latitud:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Latitude" placeholder="Latitud..." required>
+            </div> </div> </div>
+            <div class="form-group">
+              <label class="col-sm-4 control-label">Longitud:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <input type="text" class="form-control" ng-model="VisitPoint_Import.Longitude" placeholder="Longitud..." required>
+            </div> </div> </div>
+              <div class="form-group">
+              <label class="col-sm-4 control-label">Sector:</label><div class="col-sm-8"> 
+                  <div class="form-group">
+              <select ng-model="VisitPoint_Import.Route"                 
+                ng-options="VisitPoint_Import.Route_Name for VisitPoint_Import in ArrayRoutes track by VisitPoint_Import.ID_Route"class="form-control" id="Sector"></select>
+            </div> </div> </div>
+              
+           
+            <div class="modal-footer">
+            <button type="submit" class="btn btn-primary glyphicon glyphicon-save" data-dismiss="modal"> Guardar</button>
+            <a class="btn btn-primary glyphicon glyphicon-remove" data-dismiss="modal"><b> Cerrar</b></a>
+
+            </div>
+               </div>
+                  
+
+
+
+        </div>
+      </div>
+
+      </div>
+  
+ 
+   
+</div>

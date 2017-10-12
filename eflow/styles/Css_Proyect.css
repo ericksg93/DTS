@@ -1,0 +1,129 @@
+
+
+
+
+.modal-dna {
+    -webkit-box-shadow: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    border: none !important;
+    position: relative !important;
+}
+
+.space-line-5px{
+	clear: both;
+	height: 5px;
+}
+#map {
+    height: 50%;
+ }
+#content {
+    width: 33%;
+    margin: auto auto;
+    background-color: #CCC;
+}
+.Button2 {
+    border-top: 2.5px;
+	border-style:solid;
+    border-color:#fff;    
+    background-color: #48545a;    
+    color:#fff;
+    
+}
+
+#footer {
+    width: 100%;
+    height: 6%;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+   background-color: #48545a;
+}
+#main {
+    padding-bottom: 81px; /* El tamaño del footer para evitar el sobreposicionamiento */
+}
+#abc{
+  
+}
+table{
+  
+    border: 2px solid;
+    padding: 20px; 
+    width: 300px;
+    resize: horizontal;
+    overflow: auto;
+}
+table,td {
+    border: 1px solid #CFD6DA;
+    border-collapse: collapse;
+}
+th{
+    border: 1px solid #C2DCE2;
+    border-collapse: collapse;
+}
+th, td {
+    padding: 5px;
+    text-align: center;
+}
+.Aborted{
+    background-color: #F5A9A9;/*FF9999;/*FF8888;/*F36161;/*F5A9A9;*/
+}
+.Finalized{
+   background-color: #D0F5A9;/*88FF88;/*6C8B4B ;/*4E8613;/*D0F5A9;*/
+}
+.In_Process{
+  background-color: #A9E2F3;/*33CCFF;/*1ACAFF;/*5C98AB ;/*A9E2F3;*/
+}
+.Partial{
+    background-color: #F6DDA9;/*FFCC99;/*FDC892;/*FEB369;/*F2F5A9;*/
+}
+.Unassigned{
+   background-color: #E6E6E6;/*E0E0E0;/*D6D6D6;/*C4C4BF ;/*E6E6E6;*/
+}
+
+.badgea {
+  padding: 1px 9px 2px;
+  font-size: 12.025px;
+  font-weight: bold;
+  white-space: nowrap;
+  color: #ffffff;
+  background-color: #2E2EFE;
+  -webkit-border-radius: 9px;
+  -moz-border-radius: 9px;
+  border-radius: 9px;
+}
+.badgea:hover {
+  color: #ffffff;
+  text-decoration: none;
+  cursor: pointer;
+}
+.badge-Aborted {
+  background-color: #F60B0B;/* #F5A9A9;*/
+}
+.badge-Aborted:hover {
+  background-color: #953b39;
+}
+.badge-Finalized {
+  background-color:#4E8613;/*#D0F5A9;*/
+}
+.badge-Finalized:hover {
+  background-color: #356635;
+}
+.badge-In_Process {
+  background-color:#1185A9;/*#A9E2F3;*/
+}
+.badge-In_Process:hover {
+  background-color: #2d6987;
+}
+.badge-Partial {
+  background-color:#FF8000;/*#F2F5A9;*/
+}
+.badge-Partial:hover {
+  background-color: #c67605;
+}
+.badge-Unassigned {
+  background-color:#9D9D98;/*#E6E6E6;*/
+}
+.badge-Unassigned:hover {
+  background-color: #1a1a1a;
+}

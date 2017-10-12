@@ -1,0 +1,54 @@
+application: delivery-182705
+version: eflowdts
+runtime: php55
+api_version: 1
+
+
+handlers:
+
+- url: /(.+\.php)$
+  script: \1 
+ 
+- url: /Mail(.+\.php)$
+  script: \1
+  
+- url: /eflow/Manuals
+  static_dir: eflow/Manuals  
+    
+- url: /eflow/images
+  static_dir: eflow/images
+    
+- url: /eflow/scripts/controllers
+  static_dir: eflow/scripts/controllers
+   
+- url: /eflow/scripts/externals
+  static_dir: eflow/scripts/externals
+  
+- url: /eflow/styles
+  static_dir: eflow/styles
+  
+- url: /eflow/views
+  static_dir: eflow/views
+ 
+- url: /eflow
+  static_dir: eflow
+    
+- url: /EmailInvitation
+  script: Send_Invited_Mail.php
+  login: admin
+  
+- url: /EmailPDF
+  script: Send_Mails_PDF.php
+  login: admin
+  
+- url: /EmailGUIDE
+  script: Send_Mails_GUIDE.php
+  login: admin
+  
+  
+env_variables:
+  MYSQL_DSN: "mysql:unix_socket=/cloudsql/eflowv1:us-central1:dtsinstance;dbname=EPRAC"
+  MYSQL_USER: 'eprac'
+  MYSQL_PASSWORD: '224wolFe'
+  
+ 

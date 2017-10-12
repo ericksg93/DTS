@@ -1,0 +1,1 @@
+{"builders":{"configs":{}},"mixinTypes":[],"runners":{"configs":{"system:/php/web/php56_gae":{"ram":1000,"variables":{},"options":{}}},"default":"system:/php/web/php56_apache2"},"type":"GAEPhp","attributes":{"language":["php"]},"description":"eflow to App Engine Deployment"}

@@ -1,0 +1,34 @@
+<script src="scripts/externals/responsive-calendar.js"></script>
+
+<div id="Contents" ng-controller="Scr_Calendar_Controller" ng-init="init()">
+
+  <div class="container">
+      <!-- Responsive calendar - START -->
+    	<div id="calendar"class="responsive-calendar">
+        <div class="controls">
+            <a class="pull-left" data-go="prev"><div class="btn btn-primary">Anterior</div></a>
+            <h4><span data-head-year></span> <span data-head-month></span></h4>
+            <a class="pull-right" data-go="next"><div class="btn btn-primary">Siguiente</div></a>
+        </div><hr/>
+        <div class="day-headers btn-primary">
+          <div class="day header">Lunes</div>
+          <div class="day header">Martes</div>
+          <div class="day header">Miércoles</div>
+          <div class="day header">Jueves</div>
+          <div class="day header">Viernes</div>
+          <div class="day header">Sábado</div>
+          <div class="day header">Domingo</div>
+        </div>
+        <div class="days" data-group="days">
+          
+        </div>
+      </div>
+      <!-- Responsive calendar - END -->
+    <br/>
+     <span Class="badge1 label-pill label label-primary"> </span><b>Cantidad de Rutas.</b> <br/>
+    <span Class="badge1 label-pill label label-success"> </span><b>Cantidad de Puntos de Visita.</b>
+           
+    </div>
+
+
+</div>

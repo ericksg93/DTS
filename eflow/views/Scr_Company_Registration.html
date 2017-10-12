@@ -1,0 +1,452 @@
+<style>
+#Wrapper_Map{
+    width: 100%;
+    height:410px;
+    resize: vertical;
+    padding: 10px;
+    overflow: auto;
+}
+
+::-webkit-input-placeholder { 
+    text-transform: none;
+}
+</style>
+
+<div ng-controller="Scr_Company_Registration_Controller" ng-init="init()">  
+	<div class="panel panel-primary "  ng-show="Show_Company" >
+		<div class="panel-heading">Datos de la Compañia </div>
+      <div class="panel-body">
+        <form  ng-submit="Validate_Company(Companys);"class="form-horizontal">
+       <!--   <div class="form-group"> 
+            <label  class="col-sm-3 control-label">Tipo de Suscripcion:</label>
+            <div class="col-sm-7"> 
+              <input type="text" disabled class="form-control" ng-model="Companys.subscription" value="{{subscription}}" placeholder="{{subscription}}"required>
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>-->
+          <div ng-class="Class_Company_Name"> 
+            <label  class="col-sm-3 control-label">Nombre:</label>
+            <div class="col-sm-7"> 
+              <input type="text" style="text-transform: uppercase;" class="form-control" ng-change="Class_Company_Name = 'form-group'; " ng-model="Companys.name" placeholder="Nombre"required>
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Logo</label>
+            <div class="col-sm-7"> 
+              <div class="input-group col-sm-12 ">
+                <span class="input-group-addon" data-toggle="tooltip" title="Ver/Ocultar Imagen" ng-click="Show_Image = !Show_Image;">
+                  <i class="fa fa-file-image-o"></i>
+                </span>
+                <span> 
+                  <span class="btn btn-primary btn-file" style="background-color: #014D7C;color:#fff;" > 
+                    <i class="glyphicon glyphicon-folder-open"> </i> Buscar&hellip; 
+                    <input accept=".png,.jpg" id="File_Image" type="file" onchange="angular.element(this).scope().Upload_Image()"/>
+                  </span>
+                  <input  style="width: 200px;" type="text" ng-model="Companys.Logo" class="form-control" readonly/> 
+                </span>
+              </div> 
+            </div> 
+    			<div class="col-sm-2"></div>
+            <label  class="col-sm-3 control-label"></label>
+            <div class="col-sm-7">
+              <div class="box" ng-show="Show_Image">
+                   <img src="{{Image}}" alt="No hay imagen" class="img-responsive" width="500" height="500" onclick="javascript:this.width=800;this.height=800" ondblclick="javascript:this.width=500;this.height=500">
+                 </div>
+            </div>
+            </div>
+       <!--   <div class="form-group">
+            <label  class="col-sm-3 control-label">Identificador:</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" style="text-transform:uppercase;" ng-model="Companys.identifier" placeholder="Identificador"required>
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>-->
+          
+      <!--    <div class="form-group">
+            <label  class="col-sm-3 control-label">Dominio:</label>
+            <div  class="col-sm-7 "> 
+              <div class="input-group col-sm-12 ">
+                <span class="input-group-addon">@</span>
+                <input type="text" class="form-control" onkeypress="return ValidateInput(event,/@/)" onfocusout="Clear(this,/@| /gi)" ng-model="Companys.domain1" placeholder="Dominio"required>
+                <span class="input-group-addon">.</span>
+                <input type="text" class="form-control"  onkeypress="return ValidateInput(event,/@/)" onfocusout="Clear(this,/@| /gi)" ng-model="Companys.domain2" placeholder="Extension"required>
+              </div>    
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>--> 
+          <div class="form-group">
+            <label  class="col-sm-3 control-label">Correo:</label>
+            <div class="col-sm-7">
+              <input type="email" class="form-control" ng-model="Companys.mail" placeholder="Correo"required>
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>
+          <div class="form-group">
+            <label  class="col-sm-3 control-label">País:</label>
+            <div class="col-sm-7">
+             <!-- <input type="text" class="form-control"  ng-model="Companys.country" placeholder="País"required>
+              <select ng-model="Companys.country" ng-options="Obj.es for Obj in Array_Country" style="width: 100%;" class="form-control" ></select>-->
+              <input type="" class="form-control" list="Countries" ng-model="Companys.country" placeholder="País"required>
+              <datalist id="Countries">
+                  <option ng-repeat="Obj in Array_Country" value="{{Obj.es}}" > </option>
+              </datalist>                
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Dirección:</label>
+            <div class="col-sm-7">
+              <input id="Address" type="text" class="form-control" name="Address" value="" ng-model="Companys.Address" placeholder="Dirección..." required>
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>
+          <div class="form-group">
+            <label  class="col-sm-3 control-label">Ubicación:</label>
+              <div class="col-sm-7">
+              <input type="text" disabled class="col-sm-4" ng-model="Companys.location_Latitud" placeholder="Latitud">
+              <input type="text" disabled class="col-sm-4" ng-model="Companys.location_Longitud" placeholder="Longitud">
+                 <a class="btn" data-toggle="tooltip" title="Mostrar/Ocultar el mapa" ng-click="Show_Map = !Show_Map; Switch_Map_Data(Show_Map);">
+                <i ng-class="Class_Map"></i> {{Text_Map}}
+                 </a>  
+            </div>
+    			<div class="col-sm-2">
+                              
+              </div>
+            <label  class="col-sm-3 control-label"></label>
+            <div class="col-sm-7">
+              <div class="box" ng-show="Show_Map">
+                <div class="box-header with-border bg-blue">
+                  <h3 class="box-title"><b>Mapa</b></h3>
+                 <div class="box-tools pull-right">                   
+                   <button class="btn btn-box-tool" data-toggle="tooltip" title="Ajustar Tamaño" ng-click="Resize();"><i class="glyphicon glyphicon-refresh"></i></button>                   
+                 </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding" >
+                   <div id="Wrapper_Map">
+								<div id="Map_Dashboard_Company" style="height:100%; width:100%;"></div>
+                   </div><!-- /.box-body -->                  
+                </div>
+           </div>
+             </div>
+    			<div class="col-sm-2"></div>
+          </div>
+          <div class="form-group">
+            <label  class="col-sm-3 control-label">Teléfono:</label>
+            <div class="col-sm-7">
+              <input type="number" class="form-control" ng-model="Companys.phone" placeholder="Teléfono"required>
+            </div>
+    			<div class="col-sm-2"></div>
+          </div>
+          <div class="form-group">
+            <label  class="col-sm-3 control-label">Fax:</label>
+            <div class="col-sm-7">
+              <input type="number" class="form-control" ng-model="Companys.fax" placeholder="Fax"required>
+            </div>
+            <div class="col-sm-2"></div>    
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12 controls">
+              <a  href="#"  class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;" ><i  class="glyphicon glyphicon-chevron-left"></i> regresar</a>                          
+          	  <button type="submit"  class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" >Siguiente <i  class="glyphicon glyphicon-chevron-right"></i></button>                          
+            </div>
+          </div>
+        </form>
+      </div>
+	</div>
+	<div class="panel panel-primary "    ng-show="Show_User" >
+		<div class="panel-heading" >Datos del Usuario</div>
+      <div class="panel-body">
+        <form  ng-submit="Validate_User(User);"class="form-horizontal">
+          <div class="form-group">
+            <label  class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Identificador:</label>
+            <div class="col-sm-9"> 
+              <input id="ID" type="text" class="form-control" name="ID" value="" ng-model="User.ID" placeholder="Identificador..." required>
+            </div>
+          </div>  
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Nombre:</label>
+            <div class="col-sm-9">
+              <input id="Name" type="text" class="form-control" name="Name" value="" ng-model="User.Name" placeholder="Nombre..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Primer Apellido:</label> 
+            <div class="col-sm-9">
+              <input id="Lastname" type="text" class="form-control" name="Lastname" value="" ng-model="User.Lastname" placeholder="Primer Apellido..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Segundo Apellido:</label>
+            <div class="col-sm-9">
+              <input id="Lastname2" type="text" class="form-control" name="Lastname2" value="" ng-model="User.Lastname2" placeholder="Segundo Apellido..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Cédula:</label> 
+            <div class="col-sm-9">
+              <input id="Identification" type="number" class="form-control" name="Identification" value="" ng-model="User.Identification" placeholder="Cédula..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Género:</label>
+            <div class="col-sm-9"> 
+              <select ng-model="User.Gender" ng-options="Obj.value as Obj.es for Obj in ArrayGenders" style="width: 100%;" class="form-control" id="Gender" ></select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label"style="text-align:right;font-weight: bold;">Tipo:</label>	
+            <div class="col-sm-9">
+              <input id="Type" disabled type="text" value="Administrador" class="form-control" name="Type"   required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Dirección:</label>
+            <div class="col-sm-9">
+              <input id="Address" type="text" class="form-control" name="Address" value="" ng-model="User.Address" placeholder="Dirección..." required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Fecha de Nacimiento:</label>
+            <div class="col-sm-9">
+              <input id="Birthdate" type="date" min="18" max="80" class="form-control" name="Birthdate" value="" ng-model="User.Birthdate"  required>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Nombre de Usuario:</label>
+            <div class="col-sm-9">
+              <input id="UserName" type="text" class="form-control" onkeypress="return ValidateInput(event,/@/)" onfocusout="Clear(this,/@/gi)"  name="UserName" value="" ng-model="User.UserName" placeholder="Nombre de Usuario..." required>
+            </div>
+          </div>
+          
+          
+    <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Correo:</label>
+            <div class="col-sm-9">
+              <div class="input-group col-sm-12">
+                <input id="Mail_User" type="email" class="form-control" name="Mail" value="" style="text-transform:lowercase " ng-model="User.Mail" placeholder="Correo..." required>
+               <!--  <input id="Mail_User" type="email" class="form-control" onkeypress="return ValidateInput(event,/@/)" onfocusout="Clear(this,/@/gi)" name="Mail" value="" style="text-transform:lowercase " ng-model="User.Mail" placeholder="Correo..." required>
+            	  <span class="input-group-addon" style="text-transform:lowercase ">@{{Companys.domain1}}.{{Companys.domain2}}</span>-->
+              </div>
+            </div>
+          </div> 
+    
+          
+      <!--    <div class="form-group">
+            <label class="col-sm-3 control-label" style="text-align:right;font-weight: bold;">Correo:</label>
+            <div class="col-sm-9">
+              <div class="input-group col-sm-12">
+                <input id="Mail_User" type="mail" class="form-control" name="Mail" style="text-transform:lowercase " ng-model="User.Mail" placeholder="Correo..." required>            	 
+              </div>
+            </div>
+          </div>
+          -->
+          
+          <div class="form-group">
+            <label class="col-sm-3 control-label"style="text-align:right;font-weight: bold;">Contraseña:</label>
+            <div class="col-sm-8"> 
+              <input id="Password" type="{{Type}}" class="form-control" name="Password" value="" ng-model="User.Password" placeholder="Contraseña..."required>
+            </div> 
+            <div class="col-sm-1">
+              <input type="checkbox" value="Mostrar" ng-model="Ver" ng-change="Password(Ver)">
+            </div>
+          </div>
+          <div class="form-group">
+            <div class="col-sm-12 controls">
+              <button  ng-click="Show_User= false; Show_Company = true"  class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;" ><i  class="glyphicon glyphicon-chevron-left"></i> regresar</button>                          
+          	  <button  type="submit" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" >Siguiente<i  class="glyphicon glyphicon-chevron-right"></i> </button>                          
+            </div>
+          </div>
+          
+        </form>
+      </div>
+	</div>
+	<div class="panel panel-primary "   ng-show="Show_Settings" >
+		<div class="panel-heading" >Ajustes</div>
+      <div class="panel-body">
+        <form  ng-submit="SaveData();"class="form-horizontal">
+          <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_License= false;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = true">Unidad de Medida</div>
+            <div class="panel-body"  ng-show="Show_Settings_Unity"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Unity.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="Unity.Description" placeholder="Descripcion...">
+                <div class="col-sm-1">
+                  <a   ng-click="validate_Settings(Unity,Array_Unity)">
+                    <i class="glyphicon glyphicon-check" >Guardar Unidad de Medida</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Unitis in Array_Unity">
+                    <td class="col-sm-4"> {{Unitis.Value}}</td>
+                    <td class="col-sm-4"> {{Unitis.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Unitis,Array_Unity)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>  
+          <div  class="panel panel-info">
+            <div class="panel-heading"ng-click="Show_Settings_License= false;Show_Settings_User= false;Show_Settings_Fuel= true;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Tipos de Combustible</div>
+            <div class="panel-body"  ng-show="Show_Settings_Fuel"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Fuel.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="Fuel.Description" placeholder="Descripcion...">
+                <div class="col-sm-1">
+                  <a   ng-click="validate_Settings(Fuel,Array_Fuel)">
+                    <i class="glyphicon glyphicon-check" >Guardar Tipos De Combustible</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Fuels in Array_Fuel">
+                    <td class="col-sm-4"> {{Fuels.Value}}</td>
+                    <td class="col-sm-4"> {{Fuels.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Fuels,Array_Fuel)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+        <!--  <div  class="panel panel-info">
+            <div class="panel-heading"ng-click="Show_Settings_License= false;Show_Settings_User= true;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Tipos de Usuario</div>
+            <div class="panel-body"ng-show="Show_Settings_User" > 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="User.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="User.Description" placeholder="Descripcion...">
+                <div class="col-sm-1">
+                  <a   ng-click="validate_Settings(User,Array_User)">
+                    <i class="glyphicon glyphicon-check" >Guardar Unidad de Medida</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Users in Array_User">
+                    <td class="col-sm-4"> {{Users.Value}}</td>
+                    <td class="col-sm-4"> {{Users.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Users,Array_User)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>-->
+          <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_License= false;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= true;Show_Settings_Unity = false">Tipos de Vehiculos</div>
+            <div class="panel-body" ng-show="Show_Settings_Vehicle"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="Vehicle.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="Vehicle.Description" placeholder="Descripcion...">
+                <div class="col-sm-1">
+                  <a   ng-click="validate_Settings(Vehicle,Array_Vehicle)">
+                    <i class="glyphicon glyphicon-check" >Guardar Tipos De Vehiculos</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td>
+                  </tr>
+                  <tr ng-repeat="Vehicles in Array_Vehicle">
+                    <td class="col-sm-4"> {{Vehicles.Value}}</td>
+                    <td class="col-sm-4"> {{Vehicles.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Vehicles,Array_Vehicle)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <div  class="panel panel-info">
+            <div class="panel-heading" ng-click="Show_Settings_License= true;Show_Settings_User= false;Show_Settings_Fuel= false;Show_Settings_Vehicle= false;Show_Settings_Unity = false">Tipos de Licencia</div>
+            <div class="panel-body" ng-show="Show_Settings_License"> 
+                <label class="col-sm-2 control-label">Valor:</label>
+                <input class="col-sm-2"type="text" name="Input_Value" class="form-control" ng-model="License.Value" placeholder="Valor...">
+                <label class="col-sm-2 control-label">Descripcion:</label>
+                <input class="col-sm-2" type="text" name="Input_Description" class="form-control" ng-model="License.Description" placeholder="Descripcion...">
+                <div class="col-sm-1">
+                  <a   ng-click="validate_Settings(License,Array_License)">
+                    <i class="glyphicon glyphicon-check" >Guardar Tipos De Licencia</i>
+                  </a>
+                </div>
+                <table style="width:100%">
+                  <tr>
+                    <th class="col-sm-4">Valor</th>
+                    <th class="col-sm-4">Descripcion</th>
+                    <td class="col-sm-4">Mantenimiento</td> 
+                  </tr>
+                  <tr ng-repeat="Licenses in Array_License">
+                    <td class="col-sm-4"> {{Licenses.Value}}</td>
+                    <td class="col-sm-4"> {{Licenses.Description}}</td>
+                    <td class="col-sm-4">
+                      <a class="btn btn-danger">
+                        <i class="glyphicon glyphicon-remove-sign" ng-click="Remove_In_Array(Licenses,Array_License)"></i>
+                      </a>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          <div class="form-group">
+            <div class="col-sm-12 controls">
+                <a  ng-click="Show_User= true; Show_Settings = false" class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;" ><i  class="glyphicon glyphicon-chevron-left"></i> regresar</a>                          
+          	  <button  type="submit" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ><i  class="glyphicon glyphicon-save"></i> Guardar</button>   
+              <a href="#" ng-click="Show_Company= false; Show_User= false; Show_Settings = false" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" >
+                <i  class="glyphicon glyphicon-remove"></i> Cancelar</a>                                    	                         
+            </div>
+          </div>
+        </form>
+      </div>
+	</div>
+  
+  
+  <div class="modal fade" id="Charging" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                         <h4 class="modal-title" id="myModalLabel">DTS</h4>
+       	
+                </div>
+                <div class="modal-body">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span>
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+             
+          
+  
+</div>

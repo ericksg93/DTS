@@ -1,0 +1,243 @@
+
+<div ng-controller="Scr_Subscription_Controller" ng-init="init()">  
+  <div class="row">
+    <div class="col-sm-1"> </div>
+    <div class="col-sm-10">
+    	<h2>
+          <strong>
+          <font>
+            <font>Precios Accesibles</font>
+            </font>
+          </strong>
+        </h2>
+     <p >
+            <font>Ofrecemos hasta tres planes de precios accesibles que se adaptan a sus necesidades. </font>
+            <font>Todas las suscripciones son-libre contrato y los pagos anuales por adelantado que ofrecen aún mejores tasas. </font>
+              <font>Su primer conductor será siempre<strong><font> libre.</font></strong> </font>
+          </p>
+          <hr >
+    <h3 >
+          <strong>
+        <font>Contamos Con Tres Planes</font>
+          </strong>
+        </h3>
+    <p>
+            <font>Todos los precios indicados están dados en dólares estadounidenses ( "USD") por conductor mensual.</font>
+          </p>
+    
+          <hr >
+    
+  </div> 
+    
+  <div class="col-sm-1"> </div>
+</div> 
+    
+    
+<div class="row">   
+ 
+  <div class="col-sm-1"> </div>
+    <div class="col-sm-3" ng-repeat="Subscription in Arraysubscription">
+    		<div class="modal-content">
+              <div align="center" class="modal-header bg-primary">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"> 
+                  <h3>
+                    <font>
+                      <font>{{Subscription.Subscription_Name}} </font>
+                    </font>
+                  </h3>
+          <hr >
+                    <span class="badge">
+                      <font>
+                          <h3>
+                            $ {{Subscription.Ammount}}
+                          </h3></font>
+                    </span>
+                </h4>
+              </div>
+              <div class="modal-body">
+                        <font>
+                          <h3>
+                            {{Subscription.Comments}}
+                          </h3></font>
+                 <ul>
+                    <li ng-repeat="features in Subscription.Features">
+          <hr >
+                      <strong><font><font>{{features}}</font></font></strong>
+                    </li>
+        
+                    <li>
+          <hr >
+                      <strong><font><font>Usuarios gratis</font></font></strong>
+                      <font><font>  {{Subscription.Free_Users}}</font></font>
+                    </li>
+                  </ul>
+              </div>
+              <div class="modal-footer">
+                <a class="btn btn-lg btn-primary" ng-click="Save_info(Subscription)">
+                    Contratar
+                  </a>
+              </div>
+            </div>
+  </div>  
+  
+  
+    <!--div class="col-sm-4">
+    		<div class="modal-content">
+              <div align="center" class="modal-header bg-aqua">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"> 
+                  <h3>
+                    <font>
+                      <font>Mensual </font>
+                    </font>
+                  </h3>
+          <hr >
+                    <span class="badge badge-success">
+                      <font>
+                        <font>
+                          <h3>
+                            $ 24
+                          </h3></font>
+                      </font>
+                    </span>
+                </h4>
+              </div>
+              <div class="modal-body">
+                
+                 <ul>
+                    <li>
+          <hr >
+                      <strong><font><font>Gratis</font></font></strong>
+                      <font><font> para iOS / Android App</font></font>
+                    </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Ilimitado</font></font></strong>
+                      <font><font> de seguimiento de vehículos</font></font>
+                    </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Ilimitado</font></font></strong>
+                      <font><font> prueba de entrega</font></font>
+                    </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Real-Time</font></font></strong>
+                      <font><font> Notificaciones</font></font>
+                   </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Creacion de   </font></font></strong>
+                      <font><font> Vehiculo, Usuario, Establecimiento, Sector</font></font>
+                   </li>
+          <hr >
+                    <li>
+                      <strong><font><font>mensual</font></font></strong>
+                      <font><font> de Pago</font></font>
+                   </li>
+          <hr >
+                  </ul>
+                
+                
+                
+              </div>
+              <div class="modal-footer">
+                <a class="btn btn-lg btn-primary" ng-click="Save_info('Mensual')">
+                    Contratar
+                  </a>
+              </div>
+            </div>
+  </div>  
+    <div class="col-sm-4">
+    		<div class="modal-content">
+              <div align="center" class="modal-header bg-success">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">×</span></button>
+                <h4 class="modal-title"> 
+                  <h3>
+                    <font>
+                      <font>Anual </font>
+                    </font>
+                  </h3>
+          <hr >
+                    <span class="badge badge-success">
+                      <font>
+                        <font>
+                          <h3>
+                            $ 120
+                          </h3></font>
+                      </font>
+                    </span>
+                </h4>
+              </div>
+              <div class="modal-body">
+                
+                 <ul>
+                    <li>
+          <hr >
+                      <strong><font><font>Gratis</font></font></strong>
+                      <font><font> para iOS / Android App</font></font>
+                    </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Ilimitado</font></font></strong>
+                      <font><font> de seguimiento de vehículos</font></font>
+                    </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Ilimitado</font></font></strong>
+                      <font><font> prueba de entrega</font></font>
+                    </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Real-Time</font></font></strong>
+                      <font><font> Notificaciones</font></font>
+                   </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Creacion de   </font></font></strong>
+                      <font><font> Vehiculo, Usuario, Establecimiento, Sector</font></font>
+                   </li>
+          <hr >
+                    <li>
+                      <strong><font><font>Anual</font></font></strong>
+                      <font><font> de Pago</font></font>
+                   </li>
+          <hr >
+                  </ul>
+                
+                
+                
+              </div>
+              <div class="modal-footer">
+                <a class="btn btn-lg btn-primary" ng-click="Save_info('Anual')">
+                    Contratar
+                  </a>
+              </div>
+            </div>
+  </div-->  
+  </div>
+  
+  
+
+  
+  
+  
+  
+  </div>
+      
+      
+      
+      
+      
+       
+        
+       
+        
+              
+              
+              
+                    

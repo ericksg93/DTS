@@ -1,0 +1,78 @@
+<div>
+   <div class="row">
+      <div class="col-sm-12" >
+         <div class="box box-primary">
+    <div class="box-header with-border">
+        <div class="col-xs-3">
+		<div class="input-group">
+                  <span class="input-group-addon"><i class="fa fa-list-ul" data-toggle="tooltip" title="Dashboard"></i></span> 
+                  <select required ng-model="DataSet_1x1" ng-options="DataSet_1x1.Name for DataSet_1x1 in ArrayDataSet track by DataSet_1x1._id.$id" ng-change="Charge_Pivot('Pivot_1x1',DataSet_1x1,false);" class="form-control">
+                     <option value="">Dashboard</option>
+                  </select>
+        </div>
+		</div>
+		<div class="box-tools pull-right">
+            <button class="btn btn-box-tool" data-toggle="tooltip" title="Editar" ng-click="UI_Pivot_1x1 = !UI_Pivot_1x1; Charge_Pivot('Pivot_1x1',DataSet_1x1,UI_Pivot_1x1);"><i class="fa fa-edit"></i></button>
+			<button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Charge_Pivot('Pivot_1x1',DataSet_1x1,false);"><i class="fa fa-refresh"></i></button>	
+			<button class="btn btn-box-tool" ng-show="DataSet_1x1 != undefined" data-toggle="tooltip" title="Imprimir" ng-click="Print_Chart('Pivot_1x1');"><i class="fa fa-print"></i></button>
+            <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Switch_Folder_Data('Pivot_1x1');"><i ng-class="Class_Pivot_1x1"></i></button>
+        </div>
+    </div>
+    <div class="box-body" style="display: block;" ng-show="Show_Pivot_1x1">		
+        <div id="Pivot_1x1" class="chart"></div>     
+ 	</div>
+</div>
+
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12" >
+         <div class="box box-primary">
+            <div class="box-header with-border">
+               <div class="col-xs-3">
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="fa fa-list-ul" data-toggle="tooltip" title="Dashboard"></i></span> 
+                     <select required ng-model="DataSet_2x1" ng-options="DataSet_2x1.Name for DataSet_2x1 in ArrayDataSet track by DataSet_2x1._id.$id" ng-change="Charge_Pivot('Pivot_2x1',DataSet_2x1,false);" class="form-control">
+                        <option value="">Dashboard</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Editar" ng-click="UI_Pivot_2x1 = !UI_Pivot_2x1; Charge_Pivot('Pivot_2x1',DataSet_2x1,UI_Pivot_2x1);"><i class="fa fa-edit"></i></button>
+                  <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Charge_Pivot('Pivot_2x1',DataSet_2x1,false);"><i class="fa fa-refresh"></i></button>
+<button class="btn btn-box-tool" ng-show="DataSet_2x1 != undefined" data-toggle="tooltip" title="Imprimir" ng-click="Print_Chart('Pivot_2x1');"><i class="fa fa-print"></i></button>				  
+				  <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Switch_Folder_Data('Pivot_2x1');"><i ng-class="Class_Pivot_2x1"></i></button>
+               </div>
+            </div>
+            <div class="box-body" style="display: block;" ng-show="Show_Pivot_2x1">
+               <div id="Pivot_2x1" class="chart"></div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-sm-12" >
+         <div class="box box-primary">
+            <div class="box-header with-border">
+               <div class="col-xs-3">
+                  <div class="input-group">
+                     <span class="input-group-addon"><i class="fa fa-list-ul" data-toggle="tooltip" title="Dashboard"></i></span> 
+                     <select required ng-model="DataSet_3x1" ng-options="DataSet_3x1.Name for DataSet_3x1 in ArrayDataSet track by DataSet_3x1._id.$id" ng-change="Charge_Pivot('Pivot_3x1',DataSet_3x1,false);" class="form-control">
+                        <option value="">Dashboard</option>
+                     </select>
+                  </div>
+               </div>
+               <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Editar" ng-click="UI_Pivot_3x1 = !UI_Pivot_3x1; Charge_Pivot('Pivot_3x1',DataSet_3x1,UI_Pivot_3x1);"><i class="fa fa-edit"></i></button>
+                  <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Charge_Pivot('Pivot_3x1',DataSet_3x1,false);"><i class="fa fa-refresh"></i></button>	
+				  <button class="btn btn-box-tool" ng-show="DataSet_3x1 != undefined" data-toggle="tooltip" title="Imprimir" ng-click="Print_Chart('Pivot_3x1');"><i class="fa fa-print"></i></button>
+				  <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Switch_Folder_Data('Pivot_3x1');"><i ng-class="Class_Pivot_3x1"></i></button>
+               </div>
+            </div>
+            <div class="box-body" style="display: block;" ng-show="Show_Pivot_3x1">
+               <div id="Pivot_3x1" class="chart"></div>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

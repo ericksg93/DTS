@@ -1,0 +1,188 @@
+<style>
+.pvtUi{background-color:#337ab7;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+.pvtVals{background-color:#337ab7;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+.pvtRendererArea{background-color:#ffffff;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+.pvtAxisContainer{background-color:#337ab7;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+</style>
+<div id="Contents" ng-controller="Scr_Summary_Controller" ng-init="init()">
+<div class=""> 
+        
+    
+<div class="modal fade" id="Charge_New_Modal" role="dialog">
+    <div class="vertical-alignment-helper modal-dna">
+        <div class="modal-dialog vertical-align-center  modal-lg">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                      <!-- header -->  
+                <button type="button" class="close" ng-click="Close_Modal('#Charge_New_Modal');">&times;</button> 
+                <h4><span class="fa fa-line-chart"></span><label> Análisis de Datos</label></h4>
+              </div>
+                <div class="modal-body">
+                  <!-- body -->
+                  
+          <form ng-submit="Charge_DataSet(DataSet);">     
+          <div class="row">
+           <div class="col-sm-6">	
+             <h4>
+               Nombre del DataSet:
+             </h4>
+                    <div class="input-group">
+                       <span class="input-group-addon"><i class="fa fa-list-ul" data-toggle="tooltip" title="Usuario"></i></span> 
+                      <select required ng-model="DataSet" ng-options="DataSet.Name for DataSet in ArrayDataSet | filter: query : true track by DataSet._id.$id" class="form-control">
+                        <option value="">Selección del DataSet</option>
+                       </select>                        
+                    </div>
+           </div>
+          
+            <div class="col-sm-6">	
+               <h4>
+                 Filtros:
+               </h4>
+               <div class="input-group">
+                  <div class="btn-group" role="group" aria-label="...">
+                    <button  class="btn btn-primary" type="button"  ng-click="query = {}"><i class="fa fa-cube"></i>Todos</button>
+                     <button class="btn btn-primary" type="button"  ng-click="query = QueryForUser"><i class="glyphicon glyphicon-star"></i>Personales</button>
+                    <button  class="btn btn-primary" type="button"  ng-click="query = QueryForDate"><i class="glyphicon glyphicon-time"></i>Recientes</button>
+                  </div>
+               </div>
+           </div>
+             
+            
+        </div>    
+          
+             <div class="space-line-5px"></div>
+             <div class="space-line-5px"></div>
+                  
+        <div class="row">
+           <div class="col-sm-12">	
+            <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i>Cargar</button>
+          	<button type="button" class="btn btn-primary" ng-click="New_DataSet();"><i class="fa fa-plus"></i>Nuevo</button>
+           </div>
+        </div>  
+                  
+        </form>            
+                  
+                </div>
+                <div class="modal-footer">
+                   <!-- footer -->
+                  <button type="button" class="btn btn-primary" ng-click="Close_Modal('#Charge_New_Modal');">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  
+<div  class="modal fade" id="Save_Modal" role="dialog">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                      <!-- header -->  
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>  
+                 <span class="glyphicon glyphicon-cloud-upload"></span><label>Guardar DataSet</label>                  
+                </div>
+                <div class="modal-body">
+                  <!-- body -->
+                   
+                  <div>
+                  	<form>
+                       <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-area-chart" data-toggle="tooltip" title="Nombre del DataSet"></i></span> 
+                               <input required type="text" ng-model="Save_Name" class="form-control" placeholder="Nombre del DataSet...">                                               
+                     </div>
+                    <br/> 
+                    <button type="button" class="btn btn-primary" ng-click="Save_DataSet(Save_Name);"><i class="fa fa-save"></i> Guardar</button>                                          
+                    </form>
+                  </div>
+                
+                </div>
+                <div class="modal-footer">
+                   <!-- footer -->
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+   
+  
+<div class="" id="Collapse_Filter">
+    <div class="panel panel-primary">
+      <div class="panel-heading" data-toggle="collapse" href="#Filter_Panel">
+        <h4 class="panel-title">
+          <i class="fa fa-filter">&nbsp;</i>Filtros
+          <!--button type="button" class="close" data-toggle="collapse" href="#Filter_Panel">
+            <i class="glyphicon glyphicon-resize-vertical"></i></button-->
+          <p class="text-center">{{DataSet.Name}}</p>
+           
+        </h4>
+      </div>
+      <div id="Filter_Panel" class="panel-collapse collapse">
+        <div class="panel-body">
+        <form ng-submit="Refresh_Pivot_Table(Filter)">
+        
+        <div class="row"> 
+           <div class="col-sm-12">	
+             <h4>  
+               Tipo de DataSet:
+             </h4>
+                    <div class="input-group">
+                      <span class="input-group-addon"><i class="fa fa-list-ul" data-toggle="tooltip" title="Usuario"></i></span> 
+                      <select required ng-model="Filter.Type" class="form-control">
+                        <option value="">Selección de DataSet</option>
+                        <option value="Item">Tareas</option>
+                        <option value="Visit_Point">Puntos de Visita</option>
+                        <option value="Trip">Viajes</option>
+                       </select>                        
+                    </div>
+           </div>
+        </div>
+          
+          <div class="row">
+            <h4>
+               &nbsp;&nbsp;&nbsp;Rango de Fechas:
+             </h4> 
+           <div class="col-sm-4">              
+              <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-calendar" data-toggle="tooltip" title="Fecha Inicial"></i></span> 
+                               <input required type="date" ng-model="Filter.Start_Date" class="form-control">                
+              </div>
+           </div>            
+            <div class="col-sm-4">	
+              <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-calendar" data-toggle="tooltip" title="Fecha Final"></i></span> 
+                        <input required type="date" ng-model="Filter.End_Date" class="form-control">                                        
+              </div> 
+           </div>
+            <div class="col-sm-4">	
+              <div class="form-group">                                         
+                <button type="button" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ng-click="Save_Name = DataSet.Name; Confirm_DataSet();"><i class="fa fa-save"></i> Guardar</button>&nbsp;&nbsp;&nbsp;
+                <button type="submit"  class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ><i class="fa fa-refresh"></i> Refrescar</button> &nbsp;&nbsp;&nbsp;
+					<button type="button" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ng-click="init()"><i class="fa fa-suitcase"></i> Guardados</button>
+               </div>  
+           </div>
+           
+            
+        </div>
+        </form>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+   
+<br/> 
+
+ <div>  
+<button type="button" class="btn" ng-click="Pivot_UI = !Pivot_UI; Switch_See_Pivot_UI(Pivot_UI);">
+                 Editar <i ng-class="Pivot_UI_Class"></i> 
+</button> 
+   
+<div id="Pivot_Table"></div>
+  </div>   
+
+  
+  
+</div>
+</div>

@@ -1,0 +1,119 @@
+<div class="container" ng-controller="Scr_Login_Controller" ng-init="init()">
+
+	<a href="https://development-dot-eflowv1.appspot.com/eflow/Manuals/Manual_de_Usuario_DTS.pdf" target="_blank" class="btn btn-primary pull-right" style="background-color:#014D7C;color:#fff;">
+		<i class="fa fa-file-pdf-o"></i> Manual</a>
+
+	<div id="loginbox" class="mainbox col-md-6 col-md-offset-3 col-sm-6 col-sm-offset-3">
+
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+		<br/>
+
+		<div class="row">
+		</div>
+
+		<form ng-submit="EnviarPassword(Rest);" ng-show="Restaurar">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="color:#fff;background-color: #3cab81;">
+					<div class="panel-title text-center">
+						<h4>
+                  Delivery Tracking P
+                  </h4></div>
+				</div>
+				<div class="panel-heading" style="color:#fff;background-color: #014D7C;">
+					<div class="panel-title text-center"> Restablecer Contraseña</div>
+				</div>
+				<div class="panel-body">
+					<div name="form" id="form" class="form-horizontal">
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #014D7C;color:#fff;"><i class="glyphicon glyphicon-user"></i></span>
+							<input id="mail" type="email" style="text-transform:lowercase;" required class="form-control" name="mail" value="" ng-model="Rest.Mail" placeholder="Correo...">
+						</div>
+						<br />
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #014D7C;color:#fff;"><i class="fa fa-industry"></i></span>
+							<input id="company" style="text-transform:uppercase;" type="text" required class="form-control" name="ID_Company" ng-model="Rest.ID_Company" placeholder="Identificador de la Compañía...">
+						</div>
+						<br/>
+						<div class="form-group">
+							<!-- Button -->
+							<div class="col-sm-12 controls">
+								<a href="#" class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;"><i class="glyphicon glyphicon-chevron-left"></i>Regresar</a>
+								<button type="submit" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;"><i class="glyphicon glyphicon-log-in"></i> Enviar</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+
+		<form ng-submit="Log_In(Log);" ng-show="Ingreso">
+			<div class="panel panel-default">
+				<div class="panel-heading" style="color:#fff;background-color: #3cab81;">
+					<div class="panel-title text-center">
+						<h4>
+                  Delivery Tracking Prueba
+                  </h4></div>
+				</div>
+				<div class="panel-heading" style="color:#fff;background-color: #014D7C;">
+					<div class="panel-title text-center"> Ingreso al Sistema</div>
+				</div>
+				<div class="panel-body">
+					<div name="form" id="form" class="form-horizontal">
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #014D7C;color:#fff;"><i class="glyphicon glyphicon-user"></i></span>
+							<input id="mail" type="email" style="text-transform:lowercase;" required class="form-control" name="mail" value="" ng-model="Log.Mail" placeholder="Correo...">
+						</div>
+						<br />
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #014D7C;color:#fff;"><i class="glyphicon glyphicon-lock"></i></span>
+							<input id="password" type="password" required class="form-control" name="password" ng-model="Log.Password" placeholder="Contrase&ntilde;a...">
+						</div>
+						<br/>
+						<div class="input-group">
+							<span class="input-group-addon" style="background-color: #014D7C;color:#fff;"><i class="fa fa-industry"></i></span>
+							<input id="company" style="text-transform: uppercase;" type="text" required class="form-control" name="ID_Company" ng-model="Log.ID_Company" placeholder="Identificador de la Compañía...">
+						</div>
+						<br/>
+						<!-- <div class="input-group">
+                        <span class="input-group-addon" style="background-color: #014D7C;color:#fff;"><i class="fa fa-university"></i></span>
+                        <input id="company" type="text" required class="form-control" name="company" ng-model="Log.Company"  placeholder="Compañia...">
+                    </div> -->
+						<!--   <div class="checkbox">
+                    <label><input type="checkbox" ng-model="Save_Session">Guardar la Sesión</label>
+                  </div>-->
+						<br/>
+						<div class="form-group">
+							<!-- Button -->
+							<div class="col-sm-12 controls">
+								<a href="#Company_Registration" class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;"><i class="fa fa-group"></i> Registrar</a>
+								<button type="submit" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;"><i class="glyphicon glyphicon-log-in"></i> Ingresar</button>
+								<!--<a href="#Password" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;"><i class="fa fa-group"></i> Password</a>   -->
+								<!--<a href="#Subscription" class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;"><i class="fa fa-group"></i> Registrar</a>    -->
+								<!--<span id="Buttons" style="margin-left:7%;">
+                             <span>
+                                 <a class="btn btn-primary pull-left" style="background-color: #014D7C;color:#fff;"  ng-click="Open_Modal_Add_Company()" data-toggle="tooltip" title="Agregar una compañia" >
+                                   <i ></i>Registrar</a>   
+                              </span></span> -->
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="panel-footer" ng-click="Restaurar=true; Ingreso=false;">
+					           <p class="text-center"><a><b>¿Olvidó la contraseña?</b></a></p>
+				</div>
+
+			</div>
+
+		</form>
+	</div>
+
+
+
+
+
+
+</div>

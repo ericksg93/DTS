@@ -1,0 +1,176 @@
+<style>
+  
+#Wrapper_Map{
+    width: 100%;
+    height:410px;
+    resize: vertical;
+    padding: 10px;
+    overflow: auto;
+}
+  
+.modal {
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+.modal-backdrop
+{
+    opacity:0.9 !important;
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+}
+  
+.modal-header-primary {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #428bca;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+</style>
+
+<div ng-controller="Scr_Vehicles_Online_Controller" ng-init="init()">
+  
+ 
+ <div class="btn btn-primary btn-block btn-lg" ng-click="refresh();" >
+ 	<span class="pull-left"> Total de Usuarios: {{ArrayUser.length}} </span>
+   <span class="pull-center"> Actualizar Información </span>   
+ </div>
+ 
+  <div class="row" >
+			<div class="col-md-12 col-sm-12 col-xs-12">
+		 		 <div class="box ">
+                <div class="box-header with-border bg-blue">
+                  <div class="row" >
+                    <div class="col-md-3 ">
+                      <h3 class="box-title">
+                        <b>
+                          Rastreo de Vehículos
+                        </b>
+                      </h3>
+                    </div>
+                    <div class="col-md-3 ">
+                      <h3 class="box-title" ng-click="query = {'Type': 'Conductor'};"> 
+                        <i class="fa fa-truck"></i> 
+                        Conductor: {{(ArrayUser | filter:  {'Type': 'Conductor'} :true).length}}
+                      </h3>
+                   </div>
+                    <div class="col-md-3 "> 
+                      <h3 class="box-title"ng-click="query = {'Type': 'Ayudante'};"> 
+                      <i class="fa fa-user"></i> 
+                        Ayudante: {{(ArrayUser | filter:  {'Type': 'Ayudante'} :true).length}}
+                      </h3>
+                </div>
+                    <div class="col-md-3 ">  
+                      <h3 class="box-title" ng-click="query = {};"> 
+                        <i class="fa fa-user"></i> 
+                        <i class="fa fa-truck "></i> 
+                        Todos: {{(ArrayUser | filter:  {} :true).length}}
+                      </h3>
+                </div>
+                    </div> 
+                  
+                 <div class="box-tools pull-right">                   
+                   <button class="btn btn-box-tool" data-toggle="tooltip" title="Ajustar Tamaño" ng-click="Resize();"><i class="glyphicon glyphicon-refresh"></i></button>
+                   <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Create_Map();"><i class="glyphicon glyphicon-sort"></i></button>
+                  </div>
+                </div>
+                <div class="box-body no-padding" ng-show="Show_Components.Map_Online_User">
+                   <div id="Wrapper_Map">
+								<div id="Map_Online_User" style="height:100%; width:100%;"></div>
+                   </div>
+                </div>
+           </div>
+   </div>
+
+</div>
+ 
+  <br/>
+  <br/>
+  <br/>
+  
+  <div ng-show="Show_Components.Show_User_Online" align="center">
+    
+    <h1>
+    <i class="fa fa-spinner"></i> ¡No hay Usuarios en línea!
+    </h1>
+    
+  </div>
+  
+  <div class="row" ng-show="Show_Components.Show_List">
+
+    		<div class="col-lg-3 col-xs-6" ng-repeat="User in ArrayUser | filter: query">
+              <div class="small-box bg-blue ">
+                <div class="inner" ng-click="Create_Map(User)">
+                  <h5>{{User.Geolocation.Address}}</h5> 
+                  <h5>Placa: {{User.ID_Truck}}</h5> 
+                  <h5>{{User.UserName}}</h5> 
+                  <h5>Última conexión : {{User.Date | date : 'mediumTime'}}</h5>
+                  <div>                    
+                  <h5>Completado: {{(((((ArrayJobs| filter : {'ID_Truck':User.ID_Truck,'User':User.User} : true).length)-((ArrayJobs| filter : {'ID_Truck':User.ID_Truck,'User':User.User,'Visit_State':'In_Process'} : true).length))*100)/(((ArrayJobs| filter : {'ID_Truck':User.ID_Truck,'User':User.User} : true).length)))|number:0}}%</h5>
+                  <h5>Trabajos Asignados: {{(ArrayJobs| filter : {'ID_Truck':User.ID_Truck,'User':User.User} : true).length}}</h5>
+                  </div>
+                </div>
+                <div class="icon">
+                    <i ng-class="User.Class"></i>                  
+                </div>
+                <a ng-click="See_Info(User)" class=" small-box-footer bg-black">
+                 Más Información <i class="fa fa-arrow-circle-right"></i>
+                </a>
+              </div>
+            </div>
+  </div> 
+  
+  <div class="modal fade" id="Charging" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                         <h4 class="modal-title" id="myModalLabel">DTS</h4>
+                </div>
+                <div class="modal-body">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">  </span> 
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+		
+  
+  
+  </div>

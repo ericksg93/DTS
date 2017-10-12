@@ -1,0 +1,57 @@
+<div id="Contents" ng-controller="Scr_Info_Controller" ng-init="init()">
+  
+  <div id="Dictionary">
+      <div>
+         <h3>
+            <a class="fa fa-file-text" ng-click="Show_Dic = !Show_Dic;"></a><a ng-click="Show_Dic = !Show_Dic;">Diccionario</a>
+         </h3>
+      </div>
+      <div ng-show="Show_Dic">
+        <ul>
+           <li ng-repeat="Word in Dictionary">
+         <h4 style="color:#5882FA;">&nbsp;<i class="{{Word.Icon}}"></i><b>&nbsp;{{Word.Name}}</b></h4>
+            <h4> <p>
+           {{Word.Description}}
+             </p> 
+             </h4>
+           </li>
+        </ul>
+         </div>
+      
+   </div>
+  
+  <div id="BackOffice">
+      <div>
+         <h3>
+            <a class="fa fa-building" ng-click="Show_Bac = !Show_Bac;"></a><a ng-click="Show_Bac = !Show_Bac;">DTS Back Office</a>
+         </h3>
+      </div>
+      <div class="panel panel-info" ng-show="Show_Bac">
+         <div class="panel-body">
+            <ul>
+               <li>Coffee</li>
+               <li>Tea</li>
+               <li>Milk</li>
+            </ul>
+         </div>
+      </div>
+   </div>  
+  
+  <div id="Mobile">
+      <div>
+         <h3>
+            <a class="fa fa-truck gly-flip-horizontal" ng-click="Show_Mob = !Show_Mob;"></a><a ng-click="Show_Mob = !Show_Mob;">DTS Mobile </a>
+         </h3>
+      </div>
+      <div class="panel panel-info" ng-show="Show_Mob">
+         <div class="panel-body">
+            <ul>
+               <li>Coffee</li>
+               <li>Tea</li>
+               <li>Milk</li>
+            </ul>
+         </div>
+      </div>
+   </div>  
+  
+</div>

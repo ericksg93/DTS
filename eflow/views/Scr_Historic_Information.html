@@ -1,0 +1,91 @@
+<div ng-controller="Scr_Historic_Information_Controller" ng-init="init()">
+  
+	<div class="modal fade" id="Charge_New_Modal" role="dialog">
+		<div class="vertical-alignment-helper modal-dna">
+			<div class="modal-dialog vertical-align-center  modal-lg">
+				<div class="modal-content">
+					<div class="modal-header modal-header-primary">
+						<button type="button" class="close" ng-click="Close_Modal('#Charge_New_Modal');">&times;</button> 
+						<h4 style="text-align: center;"><span class="fa fa-history"></span><label>  Información Histórica</label></h4>
+					</div>
+					<div class="modal-body">
+	   
+
+
+          <form ng-submit="Charge_DataSet(DataSet);">     
+          <div class="row">
+            
+           <div class="col-sm-6">
+            <h4>
+                 Filtro de Fecha:
+             </h4>
+           </div>
+            <div class="col-sm-6">
+           </div>
+             <div class="space-line-5px"></div>
+           <div class="col-sm-6">	
+             
+                    <div class="input-group">
+                    <span class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i> </span>
+                   <!-- <input type="date" class="form-control" min="2015-01-01" ng-model="Historic.Date" required>-->
+                    <input id="date" type="date" class="form-control" name="date" value="" ng-change="validate_fechaMayorQue(Historic.Date);" ng-model="Historic.Date" placeholder="Fecha...">           
+          	
+                      </div>
+           </div>
+          
+            <div class="col-sm-6">
+               
+              <div class="input-group">
+                <button type="button" ng-click="Select_VisitPoint(Historic.Date);" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Buscar</button>
+           	 </div> 
+            </div>
+             
+            
+        </div>    
+          
+             <div class="space-line-5px"></div>
+             <div class="space-line-5px"></div>
+              <div class="row" ng-show="Information">
+                <div class="col-sm-6">
+            <h4>
+                  Usuario y Vehiculo:
+             </h4>
+           </div>
+            <div class="col-sm-6">
+           </div>
+             <div class="space-line-5px"></div>
+           <div class="col-sm-6">	
+                    <div class="input-group">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i>(<i class="fa fa-automobile "></i>)</span>
+                  <input type="" class="form-control" list="Users" ng-model="Historic.User"  placeholder="Usuario(Vehiculo)"required>
+              <datalist id="Users">
+                  <option ng-repeat="Obj in User_Truck | orderBy:'User' "  ng-value="{{Obj.User+'('+Obj.ID_Truck+')'}}">{{Obj.User+'('+Obj.ID_Truck+')'}}</option>
+              </datalist> 
+             
+                </div>
+           </div>
+          
+            <div class="col-sm-6">	
+              <button type="submit" ng-show="Information" class="btn btn-primary"  ng-click="Send_Information(Historic)"><i class="glyphicon glyphicon-import"></i>Cargar</button>
+          	<button type="reset" class="btn btn-primary"><i class="glyphicon glyphicon-remove"></i>Limpiar</button>
+           </div>
+             
+            
+        </div>    
+          
+             <div class="space-line-5px"></div>
+             <div class="space-line-5px"></div> 
+             <div class="space-line-5px"></div>    
+      
+        </form>            
+                  
+                </div>
+                <div class="modal-footer">
+                   <!-- footer -->
+                  <button type="button" class="btn btn-primary" ng-click="Close_Modal('#Charge_New_Modal');">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

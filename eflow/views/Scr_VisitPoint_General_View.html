@@ -1,0 +1,118 @@
+<style>
+  
+#Wrapper_Map{ 
+    width: 100%;
+    height:500px;
+    resize: both;
+    overflow: auto;
+    padding:5px;
+    border-bottom: 2px solid #428BCA;
+    border-radius: 8px;
+}
+  
+.modal {
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+.modal-backdrop
+{
+    opacity:0.9 !important;
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+}
+  
+.modal-header-primary {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #428bca;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+</style>
+
+<div ng-controller="Scr_VisitPoint_General_View_Controller" ng-init="init()">
+
+ 
+ <div class="row" >
+       <!--Rastreo de Camión-->
+			<div class="col-md-12 col-sm-12 col-xs-12">
+		 		 <div class="box ">
+                <div class="box-header with-border bg-blue">
+                 
+                  <h3 class="box-title lign_center"><b>Número de Establecimientos: </b>{{Array_VisitPoint.length}}</h3>
+                 <div class="box-tools pull-right">                   
+                    <div class="btn-group">
+                      <a href="#Establishment" class="btn btn-default"><i class="glyphicon glyphicon-arrow-left"></i> Regresar</a>
+                      <button type="button" class="btn btn-default" ng-click="See_Routes();"><i class="fa fa-globe"></i> Ver Sectores</button>
+                      <button type="button" class="btn btn-default" ng-click="Resize();"><i class="fa fa-refresh"></i> </button>
+ 						</div>
+ 						</div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding">
+                   <div id="Wrapper_Map">
+								<div id="Map_VisitPoint" style="height:100%; width:100%;"></div>
+                   </div><!-- /.box-body -->
+                </div>
+           </div>
+   </div>
+
+</div>
+ 
+  <br/>
+  <br/>
+  <br/>  
+
+  <div class="modal fade" id="Charging" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                         <h4 class="modal-title" id="myModalLabel">DTS</h4>
+                </div>
+                <div class="modal-body">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">  </span> 
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+		
+  
+  
+  </div>

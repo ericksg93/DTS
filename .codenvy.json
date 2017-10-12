@@ -1,0 +1,87 @@
+{
+  "v": "4.0",
+  "name": "PHP-GAE",
+  "workspace": {
+    "environments": [
+      {
+        "name": "php_gae",
+        "machineConfigs": [
+          {
+            "limits": {
+              "ram": 1000
+            },
+            "name": "ws-machine",
+            "type": "docker",
+            "source": {
+              "location": "http://beta.codenvy.com/api/recipe/recipecppmp2zk0ysgf0dq/script",
+              "type": "dockerfile"
+            },
+            "dev": true,
+            "servers": [],
+            "envVariables": {},
+            "links": []
+          }
+        ]
+      }
+    ],
+    "defaultEnv": "php_gae",
+    "projects": [
+      {
+        "links": [],
+        "name": "web-php-gae-simple",
+        "attributes": {
+          "vcs.provider.name": [
+            "git"
+          ],
+          "git.current.branch.name": [
+            "master"
+          ],
+          "git.repository.remotes": [
+            "https://github.com/che-samples/web-php-gae-simple.git"
+          ]
+        },
+        "type": "blank",
+        "source": {
+          "location": "https://github.com/che-samples/web-php-gae-simple.git",
+          "type": "git",
+          "parameters": {}
+        },
+        "path": "/web-php-gae-simple",
+        "problems": [],
+        "mixins": [
+          "git"
+        ]
+      }
+    ],
+    "name": "php_gae",
+    "commands": [
+      {
+        "commandLine": "cd ${GAE} && ./dev_appserver.py 2>&1 --php_executable_path=/usr/bin/php5-cgi --skip_sdk_update_check true --host=0.0.0.0 --admin_host=0.0.0.0 ${current.project.path}",
+        "name": "run",
+        "attributes": {
+          "previewUrl": "http://${server.port.8080}"
+        },
+        "type": "custom"
+      }
+    ],
+    "links": []
+  },
+  "ide": {
+    "onProjectsLoaded": {
+      "actions": [
+        {
+          "properties": {
+            "name": "run"
+          },
+          "id": "runCommand"
+        },
+        {
+          "properties": {
+            "file": "/web-php-gae-simple/helloworld.php"
+          },
+          "id": "openFile"
+        }
+      ]
+    }
+  }
+}

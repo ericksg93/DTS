@@ -1,0 +1,55 @@
+<div ng-controller="Scr_Tracking_Controller" ng-init="init()">
+  
+     <form>
+       <table style="width:100% , border: hidden">
+  <tr style="border: hidden">
+    <td>
+       Nº de pedido:
+    </td>
+    <td>
+       <input type="text" name="userName" ng-model="user.name" required>
+    </td>
+    
+     </tr>
+      <tr style="border: hidden">
+    
+    <td> Nº de Factura:</td>
+    <td> 
+       <input type="text" name="userName" ng-model="user.name" required>
+    </td> 
+         </tr>
+      <tr style="border: hidden">
+    <td>  Nombre del pedido:
+       </td><td> 
+       <input type="text" name="userName" ng-model="user.name" required>
+     </td>
+        
+    </tr> 
+</table>
+ </form>
+
+   <div class="row" >
+       <!--Rastreo de Camión-->
+			<div class="col-md-12 col-sm-12 col-xs-12">
+		 		 <div class="box ">
+                <div class="box-header with-border bg-blue">
+                  <h3 class="box-title"><b>Rastreo de Vehículos</b></h3>
+                 <div class="box-tools pull-right">
+                    <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Create_Map();"><i class="glyphicon glyphicon-sort"></i></button>
+                  </div>
+                </div><!-- /.box-header -->
+                <div class="box-body no-padding" ng-show="Show_Components.Map_Online_User">
+                      <div class="pad"  >
+                        <!-- Map will be created here -->
+                        <div id="world-map-markers" style="height: 410px;" >
+							<div class="jvectormap-container"  style="width: 100%; height: 100%; position: relative; overflow: hidden; background-color: transparent;">
+								<div id="Map_Online_User"  style="height: 400px;">
+								</div>
+							</div>
+						</div>
+                      </div>
+                </div><!-- /.box-body -->
+              </div>
+           </div>
+   </div>
+</div>

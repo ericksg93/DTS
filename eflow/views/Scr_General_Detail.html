@@ -1,0 +1,225 @@
+<style>
+.gi-2x{font-size: 2em;}
+.chart {
+  width: 100%; 
+  min-height: 400px;
+    resize: vertical;
+    padding: 10px;
+    overflow: auto;
+}
+.Gra {
+  width: 25%; 
+  height: 95px;
+}
+  #Chart_Order1{
+    width: 100%;
+    height:550px;
+} 
+  
+</style>
+<div id="Contents"style="background-color:#E6E6E6;" ng-controller="Scr_General_Detail_Controller" ng-init="init()"> 
+ <div class="row">
+
+  <i class="pull-right fa fa-cogs gi-2x" ng-click="Dashboard_Show = !Dashboard_Show;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              </i> 
+ <div class="" id="Collapse_Filter"  ng-show="Dashboard_Show">
+
+    <div class="panel panel-primary" >
+      <div class="panel-heading" ng-click="Dashboard_Show = !Dashboard_Show;" >
+       
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Rango de Fechas:&nbsp;&nbsp;&nbsp; 
+      </div>
+      <div >
+        <div class="panel-body">
+        <form ng-submit="Select_Data(Filter)">
+        <div class="row">
+            <!--<h4>
+               &nbsp;&nbsp;&nbsp;Rango de Fechas:
+             </h4> -->
+           <div class="col-sm-4">              
+              <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-calendar" data-toggle="tooltip" title="Fecha Inicial"></i></span> 
+                               <input required type="date" ng-model="Filter.Start_Date" class="form-control">                
+              </div>
+           </div>            
+            <div class="col-sm-4">	
+              <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-calendar" data-toggle="tooltip" title="Fecha Final"></i></span> 
+                        <input required type="date" ng-model="Filter.End_Date" class="form-control">                                        
+              </div> 
+           </div>
+            <div class="col-sm-4">	
+              <div class="form-group">                                         
+                <button type="submit"  class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ><i class="fa fa-refresh"></i> Refrescar</button> &nbsp;&nbsp;&nbsp;
+               </div>  
+           </div>
+           
+            
+        </div>
+        </form>
+        </div>
+        
+      </div>
+    </div>
+  </div> 
+  </div> 
+  <div class="row" ng-show="Detail_Show" >
+  		 <div class="col-md-12 " >
+    <div class="Gra col-md-3"  style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 10px 5px 5px 10px;">
+              <h4 style="text-align: center;color:Grey">Espacio Utilizado</h4>
+             <h3 style="text-align: center;">{{Percentage_1 | number}}%</h3>
+            </div>  
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 10px 5px 5px 10px;">
+              <h4 style="text-align: center;color:Grey">Orden con Producto Dañado</h4>
+             <h3 style="text-align: center;">{{Percentage_2 | number}}%</h3>
+            </div>  
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 10px 5px 5px 10px;">
+              <h4 style="text-align: center;color:Grey">Devoluciones</h4>
+             <h3 style="text-align: center;">{{Percentage_3 | number}}%</h3>
+            </div>
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 10px 10px 5px 10px;">
+              <h4 style="text-align: center;color:Grey">Rendimiento Visitas</h4>
+             <h3 style="text-align: center;">{{Percentage_4 | number}}%</h3>
+            </div>
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 5px 5px 10px 10px;">
+              <h4 style="text-align: center;color:Grey">Visitas a tiempo</h4>
+             <h3 style="text-align: center;">{{Percentage_5 | number}}%</h3>
+            </div>
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 5px 5px 10px 10px;">
+              <h4 style="text-align: center;color:Grey">Visitas fuera de tiempo</h4>
+             <h3 style="text-align: center;">{{Percentage_6 | number}}%</h3>
+            </div>
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 5px 5px 10px 10px;">
+              <h4 style="text-align: center;color:Grey">Efectividad de Entrega</h4>
+             <h3 style="text-align: center;">{{Percentage_7 | number}}%</h3>
+        </div>
+    <div class="Gra col-md-3" style="border-style: solid ; background-color:#ffffff; border-color:#E6E6E6; border-width: 5px 10px 10px 10px;">
+              <h4 style="text-align: center;color:Grey">Merma</h4>
+             <h3 style="text-align: center;">{{Percentage_8 | number}}%</h3>
+            </div>
+  </div>  
+  </div>
+<div class="row"  ng-show="Detail_Show" >
+  <div class="col-md-12">
+  		 <div  class="col-md-6 info-box"style="background-color:#E6E6E6;"> 
+         <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Tiempo</h3>
+              <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Chart_Time(Data.Trip)"><i class="glyphicon glyphicon-refresh"></i></button>
+                 <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Show_Chart1 = ! Show_Chart1; Switch_Folder_Data('Chart1');">
+                  <i ng-class="Class_Chart1"></i> 
+                </button>
+            </div>
+            </div>
+            <div class="box-body" style="display: block;" ng-show="Show_Chart1">		
+          	<div id="Chart_Time" class="chart"></div>     
+ 			  </div>
+          </div>  
+        </div>
+  		 <div class="col-md-6 info-box" style="background-color:#E6E6E6;" > 
+         <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Incidentes</h3>
+              <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Chart_Incidents(Data.Trip);"><i class="glyphicon glyphicon-refresh"></i></button>
+                 <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Show_Chart2 = ! Show_Chart2; Switch_Folder_Data('Chart2');">
+                  <i ng-class="Class_Chart2"></i> 
+                </button>
+            </div>
+            </div>
+            <div class="box-body" style="display: block;" ng-show="Show_Chart2">   
+         	<div id="Chart_Incident" class="chart"></div>     
+				</div>
+          </div>      
+ 			</div>
+  </div>
+  <div class="col-md-12">
+  		 <div  class="col-md-6 info-box" style="background-color:#E6E6E6;"> 
+         <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Órdenes</h3>
+              <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Chart_Jobs(Data.Trip);"><i class="glyphicon glyphicon-refresh"></i></button>
+                 <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Show_Chart3 = ! Show_Chart3; Switch_Folder_Data('Chart3');">
+                  <i ng-class="Class_Chart3"></i> 
+                </button>
+            </div>
+            </div> 
+            <div class="box-body" style="display: block;" ng-show="Show_Chart3">
+         	<div id="Chart_Order" class="chart"></div>            
+ 			  </div>
+          </div>  
+        </div>       
+  		 <div class="col-md-6 info-box" style="background-color:#E6E6E6;"> 
+         <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Productos</h3>
+              <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Chart_Units(Data.Trip);"><i class="glyphicon glyphicon-refresh"></i></button>
+                 <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Show_Chart4 = ! Show_Chart4; Switch_Folder_Data('Chart4');">
+                  <i ng-class="Class_Chart4"></i> 
+                </button>
+            </div>
+            </div>
+            <div class="box-body" style="display: block;" ng-show="Show_Chart4">		
+         	<div id="Chart_Product" class="chart"></div>         
+				</div>
+          </div>      
+ 			</div>
+  </div>
+</div>  
+<div class="row"  ng-show="Detail_Show" >
+  		 <div class="col-md-12 "style="background-color:#E6E6E6;">
+       
+  		 <div class="col-md-12 info-box"style="background-color:#E6E6E6;"> 
+         <div class="box box-primary">
+            <div class="box-header with-border">
+              <h3 class="box-title">Análisis por periodo</h3>
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('Year',Data.Trip)">Año</button>
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('Trimester',Data.Trip)">Trimestre</button>
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('Quarter',Data.Trip)">Cuatrimestre</button>
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('Month',Data.Trip)">Mes</button>
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('Week',Data.Trip)">Semana</button>
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('DayWeek',Data.Trip)">Dias de la Semana</button>
+                 <button type="button" class="btn btn-primary" ng-click="Chart_General('Day',Data.Trip)">Dia</button>
+               
+              
+              <div class="box-tools pull-right">
+                 <button class="btn btn-box-tool" data-toggle="tooltip" title="Refrescar" ng-click="Chart_General('Year',Data.Trip);"><i class="glyphicon glyphicon-refresh"></i></button>
+                 <button type="button" class="btn btn-box-tool" data-widget="collapse" ng-click="Show_Chart5 = ! Show_Chart5; Switch_Folder_Data('Chart5');">
+                  <i ng-class="Class_Chart5"></i> 
+                </button>
+            </div>
+            </div>
+            <div class="box-body" style="display: block;" ng-show="Show_Chart5">
+         	<div id="General_Charts" class="chart"></div>		         
+ 			  </div>
+           <div class="box-header with-border">       
+             <label ng-repeat="role in Chart_Roles">
+   <input type="checkbox" data-checklist-model="Chart_Roles_Checked" data-checklist-value="role">  {{role.Es}} <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; </span>   
+				</label>           
+          </div>   
+        </div>
+     </div>
+     </div>
+  <!-- Modal cargando -->
+   <div class="modal fade" id="Charging" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                         <h4 class="modal-title" id="myModalLabel">DTS</h4>
+                </div>
+                <div class="modal-body">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate">  </span> 
+                </div>
+                <div class="modal-footer">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

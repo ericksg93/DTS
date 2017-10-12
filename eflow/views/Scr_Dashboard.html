@@ -1,0 +1,171 @@
+<style>
+.gi-2x{font-size: 2em;}
+.gi-3x{font-size: 3em;}
+.gi-4x{font-size: 4em;}
+.gi-5x{font-size: 5em;}
+
+.chart {
+  width: 100%; 
+  min-height: 100px;
+    resize: vertical;
+    padding: 10px;
+    overflow: auto;
+}
+.pvtUi{background-color:#337ab7;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px; }
+.pvtVals{background-color:#337ab7;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+.pvtRendererArea{background-color:#ffffff;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+.pvtAxisContainer{background-color:#337ab7;border-style: solid;border-color:#BDBDBD;border-width: 3px 3px 3px 3px;}
+
+</style>
+<div id="Contents" ng-controller="Scr_Dashboard_Controller" ng-init="init();">
+ <div class="row">
+ <i class="pull-right fa fa-cogs gi-2x" ng-click="Dashboard_Show = !Dashboard_Show;">&nbsp;&nbsp;</i> 
+ <div class="" id="Collapse_Filter" ng-show="Dashboard_Show" >
+ 
+    <div class="panel panel-primary">
+      <div class="panel-heading" ng-click="Dashboard_Show = !Dashboard_Show;">
+        <h4 class="panel-title">  
+          <p class="text-center">{{Dashboard_Object.Name}}</p>
+        </h4>
+      </div>
+      <div>
+        <div class="panel-body">
+        <form ng-submit="Select_Data(Filter)">
+        <div class="row">
+            <h4>
+               &nbsp;&nbsp;&nbsp;Rango de Fechas:
+             </h4> 
+           <div class="col-sm-4">              
+              <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-calendar" data-toggle="tooltip" title="Fecha Inicial"></i></span> 
+                               <input required type="date" ng-model="Filter.Start_Date" class="form-control">                
+              </div>
+           </div>            
+            <div class="col-sm-4">	
+              <div class="input-group">
+                         <span class="input-group-addon"><i class="fa fa-calendar" data-toggle="tooltip" title="Fecha Final"></i></span> 
+                        <input required type="date" ng-model="Filter.End_Date" class="form-control">                                        
+              </div> 
+           </div>
+            <div class="col-sm-4">	
+              <div class="form-group">                                         
+                <button type="button" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ng-click="Confirm_Dashboard();"><i class="fa fa-save"></i> Guardar</button>&nbsp;&nbsp;&nbsp;
+                <button type="submit"  class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ><i class="fa fa-refresh"></i> Refrescar</button> &nbsp;&nbsp;&nbsp;
+				<button type="button" class="btn btn-primary pull-right" style="background-color: #014D7C;color:#fff;" ng-click="init()"><i class="fa fa-suitcase"></i> Guardados</button>
+               </div>  
+           </div>
+           
+            
+        </div>
+        </form>
+        </div>
+        
+      </div>
+    </div>
+  </div> 
+ </div>
+ 
+  
+  <div ng-include="Template">
+   </div>
+   
+   <div class="modal fade" id="Charge_New_Dashboard" role="dialog">
+      <div class="vertical-alignment-helper modal-dna">
+         <div class="modal-dialog vertical-align-center  modal-lg">
+            <div class="modal-content">
+               <div class="modal-header modal-header-primary">
+                  <!-- header -->  
+                  <button type="button" class="close" ng-click="Close_Modal('#Charge_New_Modal');">&times;</button> 
+                  <h4><span class="fa fa-line-chart"></span><label>Tablas de Visualización</label></h4>
+               </div>
+               <div class="modal-body">
+                  <!-- body -->
+                  <form ng-submit="Charge_Dashboard(Dashboard);">
+                     <div class="row">
+                        <div class="col-sm-6">
+                           <h4>
+                              Nombre del Dashboard:
+                           </h4>
+                           <div class="input-group">
+                              <span class="input-group-addon"><i class="fa fa-list-ul" data-toggle="tooltip" title="Usuario"></i></span> 
+                              <select required ng-model="Dashboard" ng-options="Dashboard.Name for Dashboard in ArrayDashboard  track by Dashboard._id.$id" class="form-control">
+                                 <option value="">Selección del Dashboard</option>
+                              </select>
+                           </div>
+                        </div>
+                        <div class="col-sm-6">
+                           <h4>
+                              Nuevo
+                           </h4>
+                           <div class="input-group">
+                              <div class="btn-group" role="group" aria-label="...">
+                                 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_1x1.html','Dashboard_1x1');" class="btn btn-primary"><i class="fa fa-table"></i> 1x1</button>
+                                 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_1x2.html','Dashboard_1x2');" class="btn btn-primary"><i class="fa fa-table"></i> 1x2</button>
+                                 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_2x1.html','Dashboard_2x1');" class="btn btn-primary"><i class="fa fa-table"></i> 2x1</button>
+                               </div> 
+							<div class="btn-group" role="group" aria-label="...">
+								 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_2x2.html','Dashboard_2x2');" class="btn btn-primary"><i class="fa fa-table"></i> 2x2</button>
+                                 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_3x1.html','Dashboard_3x1');" class="btn btn-primary"><i class="fa fa-table"></i> 3x1</button>
+                                 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_2x3.html','Dashboard_2x3');" class="btn btn-primary"><i class="fa fa-table"></i> 2x3</button>
+                                 <button type="button" ng-click="Charge_Template('views/templates/Dashboard_3x2.html','Dashboard_3x2');" class="btn btn-primary"><i class="fa fa-table"></i> 3x2</button>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="space-line-5px"></div>
+                     <div class="space-line-5px"></div>
+                     <div class="row">
+                        <div class="col-sm-12">	
+                           <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-import"></i>Cargar</button>
+                        </div>
+                     </div> 
+                  </form>
+               </div>
+               <div class="modal-footer">
+                  <!-- footer -->
+                  <button type="button" class="btn btn-primary" ng-click="Close_Modal('#Charge_New_Modal');">Cerrar</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   
+   
+   
+   <div  class="modal fade" id="Modal_Save_Dashboard" role="dialog">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                      <!-- header -->  
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>  
+                 <span class="glyphicon glyphicon-cloud-upload"></span><label>Guardar Tablero</label>                  
+                </div>
+                <div class="modal-body">
+                  <!-- body -->
+                   
+                  <div>
+                  	<form>
+                       <div class="input-group">
+                         <span class="input-group-addon">
+						 <i class="fa fa-area-chart" data-toggle="tooltip" title="Nombre del DataSet"></i>						 
+						 </span> 
+                               <input required type="text" ng-model="Save_Name" class="form-control" placeholder="Nombre del Tablero...">                                               
+                     </div>
+                    <br/> 
+                    <button type="button" class="btn btn-primary" ng-click="Save_Dashboard(Save_Name);"><i class="fa fa-save"></i> Guardar</button>                                          
+                    </form>
+                  </div>
+                
+                </div>
+                <div class="modal-footer">
+                   <!-- footer -->
+                  <button type="button" class="btn btn-primary" data-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</div>

@@ -1,0 +1,226 @@
+<style>
+
+.btn span.glyphicon {    			
+	opacity: 0;				
+}
+.btn.active span.glyphicon {				
+	opacity: 1;				
+}
+
+.modal {
+}
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -webkit-animation: spin2 .7s infinite linear;
+}
+
+@-webkit-keyframes spin2 {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+.modal-backdrop
+{
+    opacity:0.9 !important;
+}
+
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+}
+  
+.modal-header-primary {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #428bca;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+
+.modal-header-danger {
+	color:#fff;
+    padding:9px 15px;
+    border-bottom:1px solid #eee;
+    background-color: #FE2E2E;
+    -webkit-border-top-left-radius: 5px;
+    -webkit-border-top-right-radius: 5px;
+    -moz-border-radius-topleft: 5px;
+    -moz-border-radius-topright: 5px;
+     border-top-left-radius: 5px;
+     border-top-right-radius: 5px;
+}
+</style>
+
+<div id="Contents" ng-controller="Scr_User_Registration_Controller" ng-init="init()">
+ 
+ <div class="container">
+    <h1 class=""><i class="fa fa-user"></i> Registro de Usuario</h1>
+	<div class="col-lg-12 well">
+	<div class="row">
+				<form name="Form_Registration" ng-submit="Register_User(Registration_User);">
+					<div class="col-sm-12">
+						<div class="row">
+							<div class="col-sm-4 form-group">
+								<label>Nombre</label>
+								<input type="text" required placeholder="Digite su nombre.." class="form-control" ng-model="Registration_User.Name">
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>Apellido</label>
+								<input type="text" required placeholder="Digite su primer apellido.." class="form-control" ng-model="Registration_User.Lastname">
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>Apellido</label>
+								<input type="text" required placeholder="Digite su segundo apellido.." class="form-control" ng-model="Registration_User.Lastname2">
+							</div>
+						</div>					
+						<div class="form-group">
+							<label>Dirección</label>
+							<textarea required placeholder="Digite su dirección.." rows="3" class="form-control" ng-model="Registration_User.Address"></textarea>
+						</div>	
+						<div class="row">
+							<div class="col-sm-4 form-group">
+								<label>Cédula</label>
+								<input type="text" required placeholder="Digite su cédula.." class="form-control" ng-model="Registration_User.Identification">
+							</div>	
+							<div class="col-sm-4 form-group">
+								<label>Género</label>
+								<select name="Gender" required class="form-control" ng-model="Registration_User.Gender">
+								  <option value=""></option>
+                                  <option value="Masculino">Masculino</option>
+                                  <option value="Femenino">Femenino</option>
+                                </select>
+							</div>	
+							<div class="col-sm-4 form-group">
+								<label>Fecha Nacimiento</label>
+								<input type="date" required class="form-control" ng-model="Registration_User.Birthdate">
+							</div>		
+						</div>
+						<div class="row" ng-hide="Registration_User.Type === 'Administrador'">
+						    <div class="col-sm-8 form-group" >
+								<label>Licencias</label>&nbsp;&nbsp;<a data-toggle="tooltip" title="Seleccione las licencias que posee">?</a>
+                                <div>
+                                   <label ng-repeat="License in List_License">
+                                       <input type="checkbox" checklist-model="Registration_User.License" checklist-value="License">&nbsp;{{License}}&nbsp;                                         
+                                   </label>
+                                </div>
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>Fecha vencimiento</label>&nbsp;&nbsp;<a data-toggle="tooltip" title="Fecha de vencimiento de la licencia más próxima a vencer">?</a>
+								<input type="date" ng-required="!Registration_User.Type === 'Administrador'" class="form-control" ng-model="Registration_User.DueDate">
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-sm-4 form-group">
+								<label>Identificador Usuario</label>
+								<input type="text" required disabled class="form-control" ng-model="Registration_User.ID_User">
+							</div>								
+							<div class="col-sm-4 form-group">
+								<label>Tipo</label>
+								<input type="text" required disabled class="form-control" ng-model="Registration_User.Type">
+							</div>
+							<div class="col-sm-4 form-group">
+								<label>Compañía</label>
+								<input type="text" required disabled class="form-control" ng-model="Registration_User.Company">
+							</div>	
+							
+						</div>	
+						<div class="row">
+							<div class="col-sm-4 form-group">								
+        						<label>Nombre de Usuario</label>
+        						<input type="text" required class="form-control" ng-model="Registration_User.UserName">
+					       </div>		
+							<div class="col-sm-8 form-group">
+								<label>Correo</label>
+        						<input type="text" required disabled class="form-control" ng-model="Registration_User.Mail">					
+							</div>
+						</div>						
+					   <div class="row">
+							<div class="col-sm-6 form-group">
+								<label>Contraseña</label>&nbsp;&nbsp;<a data-toggle="tooltip" title="Debe contener al menos un número, una letra mayúscula y minúscula, y al menos 8 o más caracteres">?</a>
+								<input type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Digite una contraseña.." class="form-control" ng-model="Registration_User.Password">
+							</div>		
+							<div class="col-sm-6 form-group">
+								<label>Repita Contraseña</label>&nbsp;&nbsp;<a data-toggle="tooltip" title="Debe contener al menos un número, una letra mayúscula y minúscula, y al menos 8 o más caracteres">?</a>
+								<input type="password" required pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" placeholder="Repita la contraseña.." class="form-control" ng-model="Registration_User.Password_Repeat">
+							</div>	
+						</div>	
+						<div class="row" ng-show="Error_Password">
+						<a>Contraseñas no cooinciden, Por favor verificar las mismas.</a>
+						
+						
+						</div>
+						
+					<button type="submit" class="btn btn-lg pull-right" style="background-color: #014D7C;color:#fff;" ng-disabled="Check_Form(Form_Registration);">Registrar</button>					
+					</div>
+				</form> 
+				</div>
+	</div>
+	</div>
+ 
+ 
+ 
+    <!--  Modal Charging -->
+    
+     <div class="modal fade" id="Charging" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-primary">
+                         <h4 class="modal-title" id="myModalLabel">DTS</h4>
+                </div>
+                <div class="modal-body">
+                <span class="glyphicon glyphicon-refresh glyphicon-refresh-animate"></span> &nbsp;&nbsp;&nbsp;Cargando datos de registro...
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+  <!--  Modal Error -->
+    
+     <div class="modal fade" id="Error" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="vertical-alignment-helper">
+        <div class="modal-dialog vertical-align-center">
+            <div class="modal-content">
+                <div class="modal-header modal-header-danger">
+                         <h4 class="modal-title" id="myModalLabel">DTS</h4>
+                </div>
+                <div class="modal-body">
+                <span class="fa fa-warning"></span> &nbsp;&nbsp;&nbsp;La invitación ha caducado, o no existe información relacionada...
+                </div>
+                <div class="modal-footer">
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+     
+     
+</div>

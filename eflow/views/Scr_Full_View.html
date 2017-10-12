@@ -1,0 +1,176 @@
+<style>
+.chart {
+  width: 350px; 
+  min-height:190px;
+}
+</style>
+<script src="scripts/externals/jspdf.min.js"></script>
+<script src="scripts/externals/jspdf.plugin.autotable.src.js"></script>
+<div ng-controller="Scr_Full_View_Controller" ng-init="init()">     
+  <div id="Options">  
+        <div style="text-align: center;">  
+            <span style="display:inline-block;">
+              <h4>
+                  Vista General                          
+              </h4>
+            </span>
+       </div>
+  </div>
+  <hr/>                              
+  	<div class="table-container">  	  
+  	     <table class="table table-filter">
+				<tbody>
+				    <tr ng-repeat="Obj in ArrayView"> 
+						<td>
+							<div class="media">
+    							<div class="pull-left">
+    							     <a class="pull-left">   									
+                                 Porcentaje de avance 
+    									<img src="images/truck.png" class="media-photo">
+    									 <div class="progress progress-xs progress-striped active"style="width:100%">
+                                             <div class="progress-bar bg-teal" style="width:{{Obj.percentage}}%">
+                                             <b style="color:#000">
+                                               {{Obj.percentage}}%
+                                              </b>
+                                             </div>                                           
+                                         </div>
+                                 </a><br>
+                                </div>   															
+								<div class="pull-right">
+    								<div class="row">
+        								<div class="col-md-6">
+        								    <div id="Div_ReturnChart_{{Obj.User}},{{Obj.ID_Truck}}" class="chart" ng-click="A =!A;" ></div> 
+        			                    </div>
+        								<div class="col-md-6">
+        			                        <div id="Div_DeliveryChart_{{Obj.User}},{{Obj.ID_Truck}}" class="chart" ng-click="A =!A;" ></div> 
+        			                    </div>
+    								</div>
+                                </div>
+    							<div class="media-body">
+    							<h4 class="title"><i class="fa fa-user"></i>  {{Obj.User}}, <i class="fa fa-truck"></i>  {{Obj.ID_Truck}}</h4>
+									<p class="summary">
+    									<B style="color:#0D8BC5"align="left">Entregas:</B> {{Obj.Delivery_total}}<br>
+    									<B style="color:#0D8BC5"align="left">Recolecciones:</B> {{Obj.Return_total}}<br>
+    									<B style="color:#0D8BC5"align="left">Incidentes:</B> {{Obj.Incidents.total}}<br>
+									    <B style="color:#0D8BC5"align="left">Puntos de visita:</B> {{Obj.Visit_Point.length}}<br>
+					                </p>
+    							</div>
+							</div>
+        					<div ng-show="A">
+        						 <div class="row">
+                                   
+                                    <div class="col-xs-2 col-md-2" style="background-color:#4096c6; color:#fff; align:center">Entregas {{Obj.Delivery_total}}</div>
+                                    <div class="col-xs-2 col-md-2" style="background-color:#4096c6; color:#fff; align:center">Recolecciones {{Obj.Return_total}}</div>
+                                    <div class="col-xs-3 col-md-4" style="background-color:#4096c6; color:#fff; align:center">Incidentes {{Obj.Incidents.total}}</div>
+                                    <div class="col-xs-3 col-md-4" style="background-color:#4096c6; color:#fff; align:center">Puntos de visita {{Obj.Visit_Point.length}}</div>
+                                    
+                                  </div>	 
+                                  <div class="row">
+                                    
+                                        <div class="col-xs-2 col-md-2" > 
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Confirmar</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Delivery.Confirmar}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Rechazar</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Delivery.Rechazar}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Mal Estado</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Delivery.Mal_Estado}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Faltante</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Delivery.Faltante}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Vencido</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Delivery.Vencido}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Otros</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Delivery.Otros}}</div>
+                                          </div>                                          
+                                        </div> 
+                                        
+                                         <div class="col-xs-2 col-md-2" > 
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Confirmar</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Return.Confirmar}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Rechazar</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Return.Rechazar}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Mal Estado</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Return.Mal_Estado}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Faltante</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Return.Faltante}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Vencido</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Return.Vencido}}</div>
+                                          </div>
+                                            <div class="row">
+                                                <div class="col-xs-6 col-md-6" align="left" >Otros</div>
+                                                <div class="col-xs-6 col-md-6" >{{Obj.Return.Otros}}</div>
+                                          </div>                                          
+                                        </div>
+                                            
+                                        <div class="col-xs-4 col-md-4" >
+                                          <div class="row" >
+
+                                            <div class="col-xs-10 col-md-10" align="left" >Espera excesiva en el local.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Excessive_Wait}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Cancelación de entrega en sitio.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Canceled_Order}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Local cerrado.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Closed_Local}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Falla mecánica en vehículo.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Damaged_Truck}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Diferencia entre entregado y pedido.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Order_With_Difference}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Mercadería en mal estado.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Damaged_Product}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Tránsito excesivo en ruta.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Excessive_Transit}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >No tiene dinero.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.No_Money}} </div>
+                                            </div>
+                                          <div class="row" >
+                                            <div class="col-xs-10 col-md-10" align="left" >Asalto.</div>
+                                            <div class="col-xs-2 col-md-2" > {{Obj.Incidents.Assault}} </div>
+                                          </div>
+                                      </div>                                      
+                                        <div class="col-xs-4 col-md-4" >
+                                          <div class="row" ng-repeat="pv in Obj.Visit_Point"  >                                    
+                                            <div class="col-xs-6 col-md-6" align="left" >{{pv.Name}} </div>
+                                            <div class="col-xs-6 col-md-6" >{{pv.StateEs}} </div>
+                                          </div>
+                                        </div>    
+                                      </div>
+        					</div>				
+        					</td>
+					</tr>
+			</tbody>
+		</table>
+	</div>			
+</div>       			        
